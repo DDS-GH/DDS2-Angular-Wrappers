@@ -1,0 +1,20 @@
+<nav
+  id="{{elementId}}"
+  data-dds="breadcrumb"
+  aria-label="breadcrumb"
+  [ngClass]="classList"
+>
+  <ol id="list-{{show}}" class="dds__breadcrumb">
+    <li *ngFor="let item of items; let i = index" class="dds__breadcrumb__item">
+      <a href="item.link">
+        <ng-container *ngIf="i === 0">
+          <i class="dds__icon dds__icon--{{icon}}"></i>
+          <span class="dds__sr-only">{{item.name}}</span>
+        </ng-container>
+        <ng-container *ngIf="i > 0">
+          {{item.name}}
+        </ng-container>
+      </a>
+    </li>
+  </ol>
+</nav>

@@ -1,0 +1,27 @@
+<a
+  *ngIf="triggerId"
+  class="dds__link--standalone"
+  [id]="triggerId"
+  href="javascript:void(0);"
+>
+  <span class="dds__sr-only">{{srOnly}}</span>
+  <i class="dds__icon dds__icon--{{icon}}"></i>
+</a>
+<div
+  [id]="elementId"
+  class="dds__popover {{classList}}"
+  role="dialog"
+  data-dds="popover"
+  [attr.aria-labelledby]="elementId + 'Title'"
+>
+  <div class="dds__popover__content">
+    <div class="dds__popover__header">
+      <h6 class="dds__popover__headline" [id]="elementId + 'Title'">
+        {{headline}}
+      </h6>
+    </div>
+    <div class="dds__popover__body">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

@@ -1,149 +1,127 @@
-<div class="app">
-  <div class="dds__container">
-    <section class="app__home-section">
-      <h1>Button Example</h1>
-      <button class="dds__button">Shop All Deals</button>
-    </section>
-    <section class="app__home-section">
-      <h1>Accordion Example</h1>
-      <div
-        role="region"
-        id="accordion-1"
-        class="dds__accordion"
-        data-dds="accordion"
-        data-independent="true"
-        data-sr-collapse-all="3 items collapsed."
-        data-sr-expand-all="3 items expanded."
-        data-sr-expand-item="item expanded."
-        data-sr-collapse-item="item collapsed."
-      >
-        <div class="dds__accordion__control">
-          <button class="dds__accordion__control__expand" aria-disabled="false">Expand All</button>
-          <button class="dds__accordion__control__collapse" aria-disabled="false">Collapse All</button>
+<div class="body">
+  <app-header>
+    <div class="headerRow">
+      <div class="headerCol">
+        <div class="sandboxMenuContainer">
+          <a (click)="menuToggle($event)">
+            <i class="dds__icon dds__icon--menu-closed"></i>
+          </a>
         </div>
-        <div class="dds__accordion__item dds__accordion__item--expanded">
-          <h5 class="dds__accordion__heading">
-            <button
-              id="trigger-basic-item1"
-              class="dds__accordion__button"
-              aria-expanded="true"
-              aria-controls="content-basic-item1"
-            >
-              When will I receive my refund?​​​​
-            </button>
-          </h5>
-          <div
-            id="content-basic-item1"
-            class="dds__accordion__content"
-            role="region"
-            aria-labelledby="trigger-basic-item1"
+        <div class="sandboxLogoContainer">
+          <a
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
           >
-            <div class="dds__accordion__body">
-              <ol>
-                <li>Accept delivery of your order</li>
-                <li>
-                  <p>
-                    To initiate a Return (<a
-                      target="_blank"
-                      href="https://www.dell.com/learn/us/en/uscorp1/terms-conditions/art-us-return-policy"
-                      >Dell’s Return Policy.</a
-                    >), enter your order number above, under Action Menu click onReturn Order.
-                  </p>
-                  <ol>
-                    <li>Choose between the pre-paid return options below:</li>
-                    <li>Drop off to a carrier store near you (Print return label sent to you by email) or</li>
-                    <li>Pick up by carrier.</li>
-                  </ol>
-                </li>
-                <li>Ship your order back to Dell</li>
-                <li>
-                  Follow the status of your Return by entering your Dell Order Number or Dell Purchase ID above and
-                  click on View Return Details from the Action Menu.
-                </li>
-              </ol>
-            </div>
-          </div>
-        </div>
-        <div class="dds__accordion__item">
-          <h5 class="dds__accordion__heading">
-            <button
-              id="trigger-basic-item2"
-              disabled=""
-              class="dds__accordion__button"
-              aria-expanded="false"
-              aria-controls="content-basic-item2"
-            >
-              Can I cancel my order?​
-            </button>
-          </h5>
-          <div
-            id="content-basic-item2"
-            class="dds__accordion__content"
-            role="region"
-            aria-labelledby="trigger-basic-item2"
-          >
-            <div class="dds__accordion__body">
-              <ul>
-                <li>
-                  Before Production/Packaging: It may be possible to cancel your order before the production and
-                  packaging process starts.
-                </li>
-                <li>
-                  Enter your Dell Order number above for the current status of your order, if you see “Request
-                  Cancellation” option enabled on the “Action Menu”, you may submit the cancellation request. Please
-                  note your request may not be processed if the order has begun production/packaging.
-                </li>
-                <li>
-                  After Production/Shipped Orders: Orders that have already started the production process or that have
-                  shipped cannot be cancelled. If the order is no longer needed you will need to request a return.
-                  <a
-                    href="https://www.dell.com/learn/us/en/uscorp1/terms-conditions/art-us-return-policy"
-                    target="_blank"
-                    >Return T&amp;C. apply.</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="dds__accordion__item">
-          <h5 class="dds__accordion__heading">
-            <button
-              id="trigger-basic-item3"
-              class="dds__accordion__button"
-              aria-expanded="false"
-              aria-controls="content-basic-item3"
-            >
-              Can I return my order?​
-            </button>
-          </h5>
-          <div
-            id="content-basic-item3"
-            class="dds__accordion__content"
-            role="region"
-            aria-labelledby="trigger-basic-item3"
-          >
-            <div class="dds__accordion__body">
-              <ol>
-                <li>Accept delivery of your order</li>
-                <li>
-                  <p>To initiate a Return, enter your order number above, under Action Menu click on Return Order.</p>
-                  <ol>
-                    <li>Choose between the pre-paid return options below:</li>
-                    <li>Drop off to a carrier store near you (Print return label sent to you by email) or</li>
-                  </ol>
-                </li>
-                <li>Pick up by carrier.</li>
-                <li>Ship your order back to Dell</li>
-                <li>
-                  Follow the status of your Return by entering your Dell Order Number or Dell Purchase ID above and
-                  click on View Return Details from the Action Menu.
-                </li>
-              </ol>
-            </div>
-          </div>
+            <i
+              class="dds__icon dds__icon--brand-delltechnologies sandboxLogo"
+            ></i>
+          </a>
         </div>
       </div>
-    </section>
-  </div>
+      <div class="headerCol searchCol">
+        <dds-textinput
+          style="top: 4px; position: relative;"
+          elementId="fakeSearch"
+          icons="search"
+          iconClickable="true"
+          required="true"
+          classList="dds__input-text__container--sm"
+          (onIconClick)="fakeSearch($event)"
+        >
+        </dds-textinput>
+      </div>
+      <div class="headerCol">
+        <button
+          class="customHeaderButton dds__button dds__button--secondary dds__button--sm"
+          style="border: 0;"
+        >
+          <dds-badge value="4" units="items" pointer>
+            <i class="dds__icon dds__icon--cart"></i>
+          </dds-badge>
+        </button>
+        <dds-actionmenu ddsOptions='{"alignment": "end"}'>
+          <div action-trigger>
+            <button
+              class="customHeaderButton dds__button dds__button--secondary dds__button--sm"
+              style="border: 0;"
+            >
+              <dds-badge value="12" units="items" pointer>
+                <i class="dds__icon dds__icon--user"></i>
+              </dds-badge>
+            </button>
+          </div>
+          <dds-actionmenu-menu elementId="amMenu1" name="Pages">
+            <dds-actionmenu-item
+              elementId="amAction1"
+              icon="airplane"
+              (click)="menuAction()"
+            >
+              Accordion
+            </dds-actionmenu-item>
+          </dds-actionmenu-menu>
+
+          <dds-actionmenu-menu elementId="amCheck" separator="true">
+            Settings
+          </dds-actionmenu-menu>
+          <dds-actionmenu-item
+            elementId="viewRows"
+            checkbox="true"
+            icon="view-row"
+            value="rows"
+          >
+            Setting A
+          </dds-actionmenu-item>
+          <dds-actionmenu-item
+            elementId="viewCols"
+            checkbox="true"
+            checked="true"
+            icon="view-column"
+            value="columns"
+          >
+            Setting B
+          </dds-actionmenu-item>
+        </dds-actionmenu>
+      </div>
+    </div>
+  </app-header>
+  <main id="bodyMain">
+    <nav>
+      <!-- sidebar 1 content -->
+      <dds-sidenav
+        #sideNav
+        elementId="boxSidenav"
+        ddsOptions='{"expand": false}'
+        init="manual"
+      >
+        <dds-sidenav-menu
+          *ngFor="let tag of menuTags; index as t"
+          icon="dds__icon--{{ tags[tag] }}"
+          name="{{ tag.toUpperCase() }}"
+          open="false"
+        >
+          <ng-container *ngFor="let item of menuItems; index as i">
+            <dds-sidenav-item
+              tabindex="-1"
+              *ngIf="item.tags.includes(tag)"
+              [selected]="currentRoute === item.text.toLowerCase()"
+              icon="dds__icon--{{ item.icon }}"
+              [routerLink]="'/' + item.text.toLowerCase()"
+              [hidden]="item.hidden"
+            >
+              {{ item.text }}
+            </dds-sidenav-item>
+          </ng-container>
+        </dds-sidenav-menu>
+      </dds-sidenav>
+    </nav>
+    <!-- <aside>Global Right-side content</aside> -->
+    <!-- Main page content -->
+    <div class="content">
+      <div class="dds__container dds__pt-3">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </main>
+  <footer>footer</footer>
 </div>

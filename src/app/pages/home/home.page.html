@@ -1,0 +1,52 @@
+<!-- <button class="btn btn-primary" (click)="onLoadServers()">Load Servers</button> -->
+<h1>Home</h1>
+<h2>README</h2>
+<h3>Disclaimer</h3>
+<p>
+  This sandbox is version-controlled (<a
+    href="https://github.com/DDS-GH/DDS2-Ng-Routing"
+    target="blank"
+    >https://github.com/DDS-GH/DDS2-Ng-Routing</a
+  >), and has been created as a result of demand, as well as in response to
+  tickets filed for solving specific problems. There are occasionally oddities,
+  and experiments shown that can and in some instances should be ignored. Please
+  <a
+    target="blank"
+    href="https://forms.office.com/Pages/ResponsePage.aspx?id=mhlclKKDgE6fjFqRvldS3Tu72-e1EktEmC896wPSUmFUOUcwSE9NMVBLQkVONzk1SUVZNllWMUtMWiQlQCN0PWcu"
+    >contact</a
+  >
+  the DDS2 Support and Automation team for further information.
+</p>
+<p>
+  Please remember that this sample Angular app is not actually supported, while
+  at the same time is used in creating sample code that helps answer questions
+  and solve issues with the core and vanilla DDS2 library.
+</p>
+<h3>Notes</h3>
+<h4>Shell Inheritance</h4>
+<p>
+  All wrapping components inherit from
+  <i>lib/helpers/dds.component.ts</i>; This base component includes default
+  inputs such as:
+</p>
+<ul>
+  <li>
+    elementId (optional) - If left unsupplied, a random ID will be used instead.
+    This is applied to the base element of the DDS component and similar IDs are
+    generated for all linked/child components.
+  </li>
+  <li>
+    init: "now" | "later" | "manual" = "now"; Instructs the shell component to
+    initialize during AfterViewInit (now), or at some point via mutationObserver
+    (later), or manually from the parent component (manual) by calling its
+    method, initializeNow()
+  </li>
+</ul>
+
+<h4 class="boxH4">Initialization Timing</h4>
+<p>
+  The component shell normally initializes the DDS component within the
+  AfterViewInit life cycle stage. However if you add the
+  <i>init</i> property to any of the components' instances, it will initialize
+  AFTER that step, whenever the DDS component is found in the DOM.
+</p>

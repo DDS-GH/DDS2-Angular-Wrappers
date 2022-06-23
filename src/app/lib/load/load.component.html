@@ -1,0 +1,37 @@
+<ng-container *ngIf="mode==='inline'">
+  <div
+    [id]="elementId"
+    class="dds__loading-indicator {{classList}}"
+    [class.dds__d-none]="!stateOn"
+  >
+    <div
+      *ngIf="label"
+      class="dds__loading-indicator__label dds__loading-indicator__label--{{placement}}"
+    >
+      {{label}}
+    </div>
+    <div class="dds__loading-indicator__spinner"></div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="mode!=='inline'">
+  <div
+    #loadRef
+    [id]="elementId"
+    class="dds__loading-indicator__container {{classList}}"
+    data-dds="loading-indicator"
+  >
+    <div class="dds__loading-indicator__overlay" aria-hidden="true"></div>
+    <div class="dds__loading-indicator__wrapper">
+      <div class="dds__loading-indicator">
+        <div
+          class="dds__loading-indicator__label dds__loading-indicator__label--{{placement}}"
+          aria-live="polite"
+        >
+          {{label}}
+        </div>
+        <div class="dds__loading-indicator__spinner"></div>
+      </div>
+    </div>
+  </div>
+</ng-container>
