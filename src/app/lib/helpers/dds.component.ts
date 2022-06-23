@@ -7,8 +7,8 @@ import {
   tryParseOptions
 } from "./dds.helpers";
 
-// import * as DDS from "@dds/components";  // You would use this if you were using the node module for DDS
-declare const DDS: any; // Use declare if you import via CDN. Regular Angular (node_modules) usage would be via an import
+import * as DDS from "@dds/components";  // You would use this if you were using the node module for DDS
+// declare const DDS: any; // Use declare if you import via CDN. Regular Angular (node_modules) usage would be via an import
 
 @Component({
   template: ``
