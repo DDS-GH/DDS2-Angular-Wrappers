@@ -1,0 +1,21 @@
+<div
+  role="region"
+  [id]="elementId"
+  class="dds__accordion {{classList}}"
+  data-dds="accordion"
+  [attr.data-independent]="independent"
+  [attr.data-sr-collapse-all]="items.length + ' ' + texts.itemsCollapsed"
+  [attr.data-sr-expand-all]="items.length + ' ' + texts.itemsExpanded"
+  [attr.data-sr-expand-item]="texts.itemExpanded"
+  [attr.data-sr-collapse-item]="texts.itemCollapsed"
+>
+  <div *ngIf="controls" class="dds__accordion__control">
+    <button class="dds__accordion__control__expand" aria-disabled="false">
+      {{texts.expandAll}}
+    </button>
+    <button class="dds__accordion__control__collapse" aria-disabled="false">
+      {{texts.collapseAll}}
+    </button>
+  </div>
+  <ng-content select="dds-accordion-item"></ng-content>
+</div>

@@ -1,0 +1,62 @@
+<h2>Accordion</h2>
+
+<dds-accordion independent="false" controls="true">
+  <dds-accordion-item
+    id="item{{i}}"
+    title="Accordion #{{i}}"
+    *ngFor="let item of [1,2,3]; index as i; first as isFirst"
+    [expanded]="items1[i]"
+    disabled="{{!isFirst && i % 2 === 0 ? true : false}}"
+  >
+    {{i+1}}. Queso when the cheese comes out everybody's happy jarlsberg.
+    Roquefort cheesecake cheddar cheese and wine cheeseburger caerphilly queso
+    cheesy feet. Lancashire taleggio melted cheese who moved my cheese blue
+    castello pecorino cheese strings babybel. Taleggio squirty cheese cheesy
+    feet cow cheese and biscuits queso melted cheese stinking bishop. Cow goat.
+  </dds-accordion-item>
+</dds-accordion>
+
+<hr class="exampleSeparator" />
+
+<dds-accordion
+  independent="true"
+  elementId="george"
+  (click)="handleAccordionClick($event)"
+>
+  <dds-accordion-item
+    [title]="items2[0].title"
+    [expanded]="items2[0].expanded"
+    id="multi1"
+  >
+    <p>
+      There is some parent/page-level logic going on here to save the state of
+      this accordion's items expanded status (top-level only) in localStorage.
+    </p>
+    <p>You can put in a second accordion:</p>
+    <dds-accordion elementId="harry">
+      <dds-accordion-item title="Inner Accordion" id="multi2">
+        <ul>
+          <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+          <li>Aliquam tincidunt mauris eu risus.</li>
+          <li>Vestibulum auctor dapibus neque.</li>
+        </ul>
+      </dds-accordion-item>
+    </dds-accordion>
+  </dds-accordion-item>
+  <dds-accordion-item
+    [title]="items2[1].title"
+    [expanded]="items2[1].expanded"
+    id="amphibia"
+  >
+    It's no big deal
+  </dds-accordion-item>
+  <dds-accordion-item
+    [title]="items2[2].title"
+    [expanded]="items2[2].expanded"
+    id="yanother"
+  >
+    Whatchoolookinat, Willis?
+  </dds-accordion-item>
+</dds-accordion>
+
+<hr />

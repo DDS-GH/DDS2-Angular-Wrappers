@@ -1,0 +1,17 @@
+<h2>MessageBar</h2>
+<div class="controlPanel">
+  <dds-button (click)="update()">Update</dds-button>
+  <dds-button (click)="hide()">Hide</dds-button>
+  <dds-button (click)="show()">Show</dds-button>
+</div>
+<dds-messagebar
+  #ddsMbInstance
+  elementId="ddsMessageBar"
+  [title]="mb.title"
+  [dismissible]="mb.dismissible"
+  [layout]="mb.layout"
+  [icon]="mb.icon"
+  [variant]="mb.variant"
+>
+  {{mb.body}}
+</dds-messagebar>

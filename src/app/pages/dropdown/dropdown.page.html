@@ -1,0 +1,55 @@
+<h2>Dropdown</h2>
+<div class="dds__row">
+  <div class="dds__col--1 dds__col--sm-12 dds__col--md-12 dds__mb-3">
+    <p>
+      Dropdowns can also be used in the Filter pattern; please see more examples
+      of that usage under <a routerLink="/horizontal">Filter</a>.
+    </p>
+    <div class="controlPanel">
+      <button role="button" class="dds__button" (click)="handleToggle()">
+        Toggle First Hidden Option
+      </button>
+    </div>
+    <dds-dropdown
+      #ddRef
+      elementId="ddsDropdownSimple"
+      label="Simple Dropdown Example"
+      helper="Helper Text"
+      ddsOptions='{"selection": "multiple"}'
+      [groups]="data"
+    >
+    </dds-dropdown>
+  </div>
+</div>
+<div class="dds__row">
+  <div class="dds__col--1 dds__col--sm-12 dds__col--md-12 dds__mb-3">
+    <h3>Other Experiments</h3>
+    <ul>
+      <li>
+        <a target="blank" href="https://codepen.io/DorkForce/pen/mdqKQPj">
+          DDS2 Dropdown Test: Select All
+        </a>
+        &nbsp;|&nbsp;
+        <a target="blank" href="https://codepen.io/grantges/pen/vYpJWaq">
+          (v2)
+        </a>
+      </li>
+      <li>
+        <a
+          target="blank"
+          href="https://codepen.io/DorkForce/pen/rNYYrQX?editors=1010"
+        >
+          DDS2 Dropdown methods and events
+        </a>
+      </li>
+      <li>
+        <a
+          target="blank"
+          href="https://codesandbox.io/s/dds2-dropdown-with-dependent-dropdown-x2qcxr?file=/src/index.js"
+        >
+          DDS2 Dropdown with dependent Dropdown
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

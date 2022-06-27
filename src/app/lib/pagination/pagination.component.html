@@ -1,0 +1,84 @@
+<div
+  [id]="elementId"
+  class="dds__pagination {{classList}}"
+  data-dds="pagination"
+  role="navigation"
+>
+  <div class="dds__pagination__summary">
+    <label
+      class="dds__pagination__per-page-label"
+      [attr.for]="elementId + '-per-page'"
+    >
+      {{labels.itemsPerPage}}
+    </label>
+    <div
+      class="dds__select dds__select--sm dds__pagination__per-page-select"
+      data-dds="select"
+    >
+      <div class="dds__select__wrapper">
+        <select class="dds__select__field" [id]="elementId + '-per-page'">
+          <ng-container *ngFor="let option of perPageOptions">
+            <option value="{{option}}">
+              {{option}}
+            </option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+    <div class="dds__pagination__range" aria-live="polite">
+      <span class="dds__pagination__range-start"></span>
+      -
+      <span class="dds__pagination__range-end"></span>
+      <span class="dds__pagination__range-total-label">
+        {{labels.of}}
+        <span class="dds__pagination__range-total"></span>
+        {{labels.items}}
+      </span>
+    </div>
+  </div>
+  <div class="dds__pagination__nav">
+    <button
+      class="dds__button dds__button--tertiary dds__button--sm dds__button__icon dds__pagination__first-page"
+      aria-label="First page"
+    ></button>
+    <button
+      class="dds__button dds__button--tertiary dds__button--sm dds__pagination__prev-page"
+      aria-label="Previous page"
+    >
+      <span class="dds__pagination__prev-page-label">{{labels.previous}}</span>
+    </button>
+    <div class="dds__pagination__page-range">
+      <label
+        class="dds__pagination__page-range-label"
+        [attr.for]="elementId + '-current-page'"
+      >
+        {{labels.page}}
+      </label>
+      <div class="dds__input-text__container dds__input-text__container--sm">
+        <div
+          class="dds__input-text__wrapper dds__pagination__page-range-current-wrapper"
+        >
+          <input
+            class="dds__input-text dds__pagination__page-range-current"
+            type="text"
+            [id]="elementId + '-current-page'"
+          />
+        </div>
+      </div>
+      <div class="dds__pagination__page-range-total-label">
+        of
+        <span class="dds__pagination__page-range-total"></span>
+      </div>
+    </div>
+    <button
+      class="dds__button dds__button--tertiary dds__button--sm dds__pagination__next-page"
+      aria-label="Next page"
+    >
+      <span class="dds__pagination__next-page-label">{{labels.next}}</span>
+    </button>
+    <button
+      class="dds__button dds__button--tertiary dds__button--sm dds__button__icon dds__pagination__last-page"
+      aria-label="Last page"
+    ></button>
+  </div>
+</div>

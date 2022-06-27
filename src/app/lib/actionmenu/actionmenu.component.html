@@ -1,0 +1,21 @@
+<div
+  id="{{ elementId }}"
+  class="dds__action-menu {{classList}}"
+  data-dds="action-menu"
+  [class.attachButton]="button"
+  [attr.data-trigger]="'#' + elementId + 'Trigger'"
+>
+  <div [id]="elementId + 'Trigger'">
+    <ng-content select="[action-trigger]"></ng-content>
+  </div>
+  <div
+    class="dds__action-menu__container dds__action-menu__container--hidden"
+    tabindex="-1"
+    role="presentation"
+    aria-hidden="true"
+  >
+    <ul class="dds__action-menu__menu" role="menu" tabindex="-1">
+      <ng-content></ng-content>
+    </ul>
+  </div>
+</div>

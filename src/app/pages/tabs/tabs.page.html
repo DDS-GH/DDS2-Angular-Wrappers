@@ -1,0 +1,62 @@
+<h2>Tabs</h2>
+<div class="dds__row">
+  <div class="boxControl dds__col--1 dds__col--sm-12 dds__col--md-12 dds__mb-3">
+    <div class="controlPanel">
+      <dds-button (click)="tabsSelect(2)">
+        Select Tab 3
+      </dds-button>
+    </div>
+  </div>
+</div>
+<div class="dds__row">
+  <div class="dds__col--1 dds__col--sm-12 dds__col--md-12 dds__mb-3">
+    <dds-tabs
+      #catTabs
+      elementId="kittyTabs"
+      classList="dds__tabs--mobile-stacked"
+    >
+      <dds-tab
+        id="tab-0"
+        title="kitty ipsum"
+        [selected]="true"
+        icon="copy-alt"
+      ></dds-tab>
+      <dds-tab-pane id="tab-pane-0" tabId="tab-0" [hidden]="false">
+        <p>
+          Find empty spot in cupboard and sleep all day jump on fridge and skid
+          on floor, crash into wall cat milk copy park pee walk owner escape
+          bored tired cage droppings sick vet vomit, for lick human with
+          sandpaper tongue.
+        </p>
+      </dds-tab-pane>
+
+      <dds-tab
+        id="tab-1"
+        title="Imma lion"
+        image="https://picsum.photos/id/1074/60/50"
+      ></dds-tab>
+      <dds-tab-pane id="tab-pane-1" tabId="tab-1" [hidden]="true">
+        <p>
+          Sit in window and stare oooh, a bird, yum. Whenever a door is opened,
+          rush in before the human chew iPad power cord, yet meow meow, i tell
+          my human instantly break out into full speed gallop across the house
+          for no reason.
+        </p>
+      </dds-tab-pane>
+
+      <dds-tab id="tab-2" title="lick, lick, lick"></dds-tab>
+      <dds-tab-pane id="tab-pane-2" tabId="tab-2" [hidden]="true">
+        <p>
+          More napping, more napping all the napping is exhausting meow meow
+          mama but lie in the sink all day hunt anything i bet my nine lives on
+          you-oooo-ooo-hooo why dog in house? i'm the sole ruler of this home
+          and its inhabitants smelly, stupid dogs, inferior furballs time for
+          night-hunt, human freakout, jump on human and sleep on her all night
+          long be long in the bed, purr in the morning and then give a bite to
+          every human around for not waking up request food, purr loud scratch
+          the walls, the floor, the windows, the humans.
+        </p>
+      </dds-tab-pane>
+    </dds-tabs>
+  </div>
+</div>
