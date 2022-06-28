@@ -64,6 +64,7 @@ export class TablePageComponent implements AfterViewInit {
       ]
     ]
   };
+  private emptyRow: Array<any> = [{ value: `` }, { value: `` }, { value: `` }];
   private tooltip: any = {};
   public selectedIndex?: string = undefined;
 
@@ -79,6 +80,11 @@ export class TablePageComponent implements AfterViewInit {
   }
 
   handleAdd(e: any) {
+    if(this.config.data[0] === this.emptyRow) {
+        // @ts-ignore
+        this.ddsMbInstance.close();
+        this.config.data.pop();
+    }
     const num: number = Uuid();
     const buttonData: any = {
       id: `trbutton${num}`,
@@ -105,8 +111,8 @@ export class TablePageComponent implements AfterViewInit {
     this.config.data.pop();
     if (this.config.data.length === 0) {
         // @ts-ignore
-        this.ddsMbInstance.ddsComponent.showMessageBar();
-        this.config.data.push([{ value: `` }, { value: `` }, { value: `` }]);
+        this.ddsMbInstance.open();
+        this.config.data.push(this.emptyRow);
     }
     this.reinitializeTable();
   }

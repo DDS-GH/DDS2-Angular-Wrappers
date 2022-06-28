@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 })
 export class AccordionPageComponent implements OnInit {
   public items1: Array<any> = [];
+  public isDisabled: boolean = true;
   // you would need a separate array and handler for every accordion you want to track this way
   public items2: Array<any> = [
     {
@@ -86,5 +87,8 @@ export class AccordionPageComponent implements OnInit {
       }
     });
     this.setData(this.items2);
+  }
+  handleDisable(e: any) {
+    this.isDisabled = !this.isDisabled;
   }
 }

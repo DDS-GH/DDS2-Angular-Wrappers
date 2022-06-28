@@ -18,12 +18,19 @@
 
 <hr class="exampleSeparator" />
 
+<div class="controlPanel">
+    <dds-button (click)="handleDisable($event)">
+        {{isDisabled ? "Enable" : "Disable"}}
+    </dds-button>
+</div>
+
 <dds-accordion
   independent="true"
   elementId="george"
   (click)="handleAccordionClick($event)"
 >
   <dds-accordion-item
+    [disabled]="isDisabled"
     [title]="items2[0].title"
     [expanded]="items2[0].expanded"
     id="multi1"

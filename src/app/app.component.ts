@@ -70,7 +70,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     /* you can initialize child components by changing their
     "init" property to "manual" and then just calling initializeNow
     whenever you like */
-    if (this.sideNav) {
+      // @ts-ignore
+      if (this.sideNav.initializeNow) {
       // @ts-ignore
       this.sideNav.initializeNow();
     }

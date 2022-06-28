@@ -25,4 +25,5 @@ export class TableComponent extends DdsComponent implements OnChanges {
       return;
     }
   }
+
 }
