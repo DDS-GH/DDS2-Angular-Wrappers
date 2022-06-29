@@ -23,11 +23,11 @@ export class MessageBarPageComponent {
 
   hide() {
     // @ts-ignore
-    this.ddsMbInstance.ddsComponent.closeMessageBar();
+    this.ddsMbInstance.close();
   }
 
   show() {
     // @ts-ignore
-    this.ddsMbInstance.ddsComponent.showMessageBar();
+    this.ddsMbInstance.open();
   }
 }
