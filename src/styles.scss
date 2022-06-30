@@ -1,10 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@use "@dds/components/src/scss/dds-reboot-wrapper.scss";
-@use "@dds/components/src/scss/dds-main.scss";
-@use "@dds/components/src/scss/dds-icons.scss";
-@use "@dds/components/src/scss/dds-fonts.scss";
-
-// these three are the minimum required styles for grid layout:
-@use "@dds/components/src/scss/dds-helpers.scss";
 @use "@dds/components/src/scss/dds-reboot.scss";
-// @forward "@dds/components/src/components/grid/grid";
+@use "@dds/components/src/scss/dds-fonts.scss";
+@use "@dds/components/src/scss/dds-icons.scss";
+@use "@dds/components/src/scss/dds-helpers.scss";
+@use "@dds/components/src/scss/dds-main.scss";

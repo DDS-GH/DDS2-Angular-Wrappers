@@ -1,6 +1,9 @@
-<div class="dds__accordion__item" [class.dds__accordion__item--expanded]="expanded">
+<div class="dds__accordion__item" 
+    [class.dds__accordion__item--expanded]="expanded"
+    [class.dds__accordion__item--inactive]="isDisabled"
+>
     <h5 class="dds__accordion__heading">
-        <button id="{{elementId}}Trigger{{id}}" class="dds__accordion__button" [disabled]="disabled"
+        <button id="{{elementId}}Trigger{{id}}" class="dds__accordion__button" [disabled]="isDisabled"
             [attr.data-target]="'#' + elementId" [attr.aria-expanded]="expanded" [attr.aria-controls]="elementId">
             <span class="dds__mx-2">
                 {{title}}
