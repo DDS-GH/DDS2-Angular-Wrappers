@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from "@angular/core";
+import { debug } from "src/app/utilities/util";
 
 @Component({
   templateUrl: "./textinput.page.html"
@@ -27,7 +28,7 @@ export class TextInputPageComponent implements AfterViewInit {
       document.getElementById(`${e.id}-input`).value = ``;
       this.liveIcons = this.liveIcons.replace(this.closeIcon, "");
     } else {
-      console.log(e.type);
+      debug(e.type);
     }
   }
 

@@ -78,7 +78,6 @@ export class LoadComponent extends DdsComponent implements OnInit, OnChanges {
       try {
         this.ddsComponent.show();
       } catch (e: any) {
-        console.log(e);
         // component is inline; swallow error
       }
     }
@@ -93,7 +92,6 @@ export class LoadComponent extends DdsComponent implements OnInit, OnChanges {
       try {
         this.ddsComponent.hide();
       } catch (e: any) {
-        console.log(e);
         // component is inline; swallow error
       }
     }

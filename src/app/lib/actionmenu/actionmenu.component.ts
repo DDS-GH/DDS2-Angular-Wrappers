@@ -49,6 +49,15 @@ export class ActionMenuComponent
           break;
       }
     });
+    if (this.ddsOptions === undefined) {
+        this.ddsOptions = {};
+    }
+    if (typeof this.ddsOptions === `string`) {
+        this.ddsComponent = JSON.parse(this.ddsOptions);
+    }
+    if (typeof this.ddsOptions !== `string` && !this.ddsOptions.alignment) {
+        this.ddsOptions.alignment = `start`;
+    };
   }
 
   ngOnDestroy() {

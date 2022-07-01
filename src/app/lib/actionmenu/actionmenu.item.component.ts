@@ -70,7 +70,6 @@ export class ActionMenuItemComponent implements OnChanges, OnInit, OnDestroy {
   public onClick() {
     if (!this.disabled) {
       this.menuState.changeState(toState.closed);
-      console.log(this.onClicked);
       this.onClicked.emit(this.value);
     }
   }

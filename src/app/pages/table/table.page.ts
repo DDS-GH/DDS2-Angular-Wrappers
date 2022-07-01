@@ -13,6 +13,7 @@ import { ButtonComponent } from "src/app/lib/button/button.component";
 import { Uuid } from "src/app/lib/helpers/dds.helpers";
 import { TooltipComponent } from "src/app/lib/tooltip/tooltip.component";
 import { randomNumber } from "src/app/utilities/mock";
+import { debug } from "src/app/utilities/util";
 
 declare const DDS: any; // Use declare if you import via CDN. Regular Angular (node_modules) usage would be via an import
 
@@ -248,6 +249,6 @@ export class TablePageComponent implements AfterViewInit {
   }
 
   handleRowButtonClick(e: any) {
-    console.log(e.target);
+    debug(e.target);
   }
 }
