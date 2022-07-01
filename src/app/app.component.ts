@@ -61,7 +61,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   // @ts-ignore
   ngOnInit(): void {
-    console.clear();
     this.sortMenu();
   }
 
@@ -75,7 +74,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       // @ts-ignore
       this.sideNav.initializeNow();
     }
-    // console.clear();
     // let baseStyles = [
     //   'color: #fff',
     //   'background-color: #444',
