@@ -22,7 +22,6 @@ export class MessageBarComponent
   ngOnInit(): void {
     super.ngOnInit();
     this.dismissible = stringToBoolean(this.dismissible);
-    this.hide = stringToBoolean(this.hide);
     this.ddsInitializer = `MessageBar`;
     if (!this.icon) {
       switch (this.variant) {
@@ -41,6 +40,10 @@ export class MessageBarComponent
       }
     }
     this.variant = `dds__message-bar--${this.variant}`;
+    this.hide = stringToBoolean(this.hide);
+    if (this.hide && this.classList.indexOf(`dds__d-none`) === -1) {
+        this.classList += ` dds__d-none`;
+    }
   }
 
   override ngAfterViewInit(): void {
@@ -55,6 +58,7 @@ export class MessageBarComponent
   };
 
   open = () => {
+    this.classList = this.classList.replace(/ dds__d-none/g, ``);
     if (this.ddsComponent) this.ddsComponent.showMessageBar();
   };
 }
