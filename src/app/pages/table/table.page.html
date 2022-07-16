@@ -10,7 +10,7 @@
       <a routerLink="/table-pagination">Table-Pagination</a> page.
     </p>
     <div class="controlPanel">
-      <button role="button" class="dds__button" (click)="handleAdd($event)">
+      <button role="button" class="dds__button" (click)="handleAdd(1)">
         Add Row
       </button>
       <button role="button" class="dds__button" (click)="handleDelete($event)">
@@ -27,7 +27,6 @@
       </button>
     </div>
     <dds-messagebar
-      #ddsMbInstance
       elementId="ddsMessageBar"
       classList="dds__d-none"
       [title]="mb.title"
