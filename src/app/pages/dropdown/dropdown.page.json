@@ -5,8 +5,8 @@
     "stored": [],
     "options": [
       {
-        "name": "Alpha Item 0",
-        "value": "Alpha Item 00",
+        "name": "Kitty Item 0",
+        "value": "Kitty Item 00",
         "selected": false
       },
       {
@@ -16,8 +16,8 @@
         "hidden": true
       },
       {
-        "name": "Alpha Item 1",
-        "value": "Alpha Item 11",
+        "name": "Kitty Item 1",
+        "value": "Kitty Item 11",
         "selected": false
       },
       {
@@ -27,8 +27,8 @@
         "hidden": true
       },
       {
-        "name": "Alpha Item 2",
-        "value": "Alpha Item 22",
+        "name": "Kitty Item 2",
+        "value": "Kitty Item 22",
         "selected": false
       }
     ]
@@ -37,18 +37,18 @@
     "name": "Other Stuff",
     "options": [
       {
-        "name": "Beta Item 0",
-        "value": "Beta Item 00",
+        "name": "Purr Item 0",
+        "value": "Purr Item 00",
         "selected": false
       },
       {
-        "name": "Beta Item 1",
-        "value": "Beta Item 11",
+        "name": "Purr Item 1",
+        "value": "Purr Item 11",
         "selected": false
       },
       {
-        "name": "Beta Item 2",
-        "value": "Beta Item 22",
+        "name": "Purr Item 2",
+        "value": "Purr Item 22",
         "selected": false
       }
     ]

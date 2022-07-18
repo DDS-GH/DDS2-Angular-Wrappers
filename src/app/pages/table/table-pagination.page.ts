@@ -6,22 +6,20 @@ import {
   ElementRef,
   EmbeddedViewRef,
   Injector,
-  OnInit,
   ViewChild,
   ViewContainerRef
 } from "@angular/core";
 import { Uuid } from "src/app/lib/helpers/dds.helpers";
+import { injectComponent } from "src/app/lib/helpers/dds.injector";
 import { TooltipComponent } from "src/app/lib/tooltip/tooltip.component";
 import { randomNumber } from "src/app/utilities/mock";
 import { debug } from "src/app/utilities/util";
 
-declare const DDS: any; // Use declare if you import via CDN. Regular Angular (node_modules) usage would be via an import
-
 @Component({
-  templateUrl: "./table-pagination.page.html",
-  styleUrls: ["./table-pagination.page.scss"]
+  templateUrl: './table-pagination.page.html',
+  styleUrls: ['./table-pagination.page.scss'],
 })
-export class TablePaginationPageComponent implements OnInit, AfterViewInit {
+export class TablePaginationPageComponent implements AfterViewInit {
   @ViewChild(`myTable`) myTable!: ElementRef<HTMLElement>;
   @ViewChild(`paginationRef`) paginationRef!: ElementRef<HTMLElement>;
   public classList: string = `dds__table--compact`;
@@ -30,23 +28,23 @@ export class TablePaginationPageComponent implements OnInit, AfterViewInit {
     data: [],
     page: {
       current: 0,
-      size: 6
-    }
+      size: 6,
+    },
   };
   public config: any = {
     columns: [
       {
         value: `Khakis`,
-        sortBy: this.sorting
+        sortBy: this.sorting,
       },
       {
-        value: `Cornish <tthold id="ht${Uuid()}" title="Tooltip Title">Tooltip Content</tthold>`
+        value: `Cornish <tthold id="ht${Uuid()}" title="Tooltip Title">Tooltip Content</tthold>`,
       },
       {
-        value: `Peking`
-      }
+        value: `Peking`,
+      },
     ],
-    data: this.refinePool()
+    data: this.refinePool(),
   };
   private tooltip: any = {};
   public selectedIndex?: string = undefined;
@@ -55,8 +53,8 @@ export class TablePaginationPageComponent implements OnInit, AfterViewInit {
     perPageOptions: [6, 12, 24],
     options: {
       currentPage: this.pool.page.current,
-      totalItems: this.pool.page.size
-    }
+      totalItems: this.pool.page.size,
+    },
   };
 
   constructor(
@@ -65,8 +63,6 @@ export class TablePaginationPageComponent implements OnInit, AfterViewInit {
     private factoryResolver: ComponentFactoryResolver,
     private injector: Injector
   ) {}
-
-  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.handleAdd(48);
@@ -94,14 +90,14 @@ export class TablePaginationPageComponent implements OnInit, AfterViewInit {
       const ttData: any = {
         id: `tt${num}`,
         title: `Cock-a-Doodle-doo`,
-        content: `I used to run a dating service for chickens, but I was struggling to make hens meet.`
+        content: `I used to run a dating service for chickens, but I was struggling to make hens meet.`,
       };
       this.pool.data.push([
         { value: `Quack ${num}<span class="dds__d-none rowId">${num}</span>` },
         { value: `Moo?` },
         {
-          value: `Joke? <tthold id="${ttData.id}" title="${ttData.title}">${ttData.content}</tthold>`
-        }
+          value: `Joke? <tthold id="${ttData.id}" title="${ttData.title}">${ttData.content}</tthold>`,
+        },
       ]);
     }
     // @ts-ignore
@@ -115,7 +111,7 @@ export class TablePaginationPageComponent implements OnInit, AfterViewInit {
     this.myTable.ddsElement.innerHTML = ``;
     // @ts-ignore
     if (this.myTable.ddsComponent.dispose) {
-        // @ts-ignore
+      // @ts-ignore
       this.myTable.ddsComponent.dispose();
     }
     // @ts-ignore
@@ -195,33 +191,13 @@ export class TablePaginationPageComponent implements OnInit, AfterViewInit {
   }
 
   initializeTooltips() {
-    // make sure the components you wish to create instances of are in your module's entryComponents
-    // make sure your constructor defines the references (see this class's constructor)
-    const el = this.viewContainerRef.element.nativeElement as HTMLElement;
-    const placeholders = el.querySelectorAll("tthold");
-    placeholders.forEach((ph) => {
-      // 1 Find a component factory
-      const componentFactory = this.factoryResolver.resolveComponentFactory(
-        TooltipComponent
-      );
-      // 2 create and initialize a component reference
-      const componentRef = componentFactory.create(this.injector);
-      componentRef.instance.elementId = ph.id;
-      componentRef.instance.title = ph.getAttribute(`title`) || ``;
-      componentRef.instance.content = ph.innerHTML;
-      // 3 attach component to applicationRef so angular virtual DOM will
-      // understand it as dirty (requires re-rendering)
-      this.applicationRef.attachView(componentRef.hostView);
-      // 4 let`s do som preparation, get from the component created
-      // a view REF
-      const viewRef = componentRef.hostView as EmbeddedViewRef<any>;
-      // and from view REF the HTML content...
-      const viewEl = viewRef.rootNodes[0] as HTMLElement;
-      const phParent = ph.parentElement;
-      if (phParent) {
-        phParent.appendChild(viewEl);
-      }
-      ph.remove();
-    });
+    const element = this.viewContainerRef.element.nativeElement as HTMLElement;
+    injectComponent(
+      this.applicationRef,
+      this.factoryResolver,
+      this.injector,
+      TooltipComponent,
+      element.querySelectorAll('tthold')
+    );
   }
 }

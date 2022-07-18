@@ -29,6 +29,7 @@
         [class.warning]="warning"
         [attr.aria-labelledby]="elementId + '-label ' + elementId + '-helper'"
         autocomplete="off"
+        [placeholder]="placeholder"
       />
 
       <small
@@ -45,10 +46,8 @@
       >
         {{warning}}
       </small>
-      <div
-        [attr.id]="elementId + '-feedback'"
-        class="dds__invalid-feedback"
-      ></div>
+      <div [attr.id]="elementId + '-feedback'" class="dds__invalid-feedback"></div>
+      <i (click)="handleClear()" class="dds__icon dds__icon--close-x ddsc__dropdown__button--clear dds__d-none"></i>
     </div>
   </div>
   <div

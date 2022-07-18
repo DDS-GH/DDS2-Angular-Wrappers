@@ -19,29 +19,34 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
   @Input() helper: string = ``;
   @Input() groups: any;
   @Input() useBackend: any = `false`;
+  @Input() useXClear: any = `false`;
   @Input() warning: string = ``;
+  @Input() placeholder: string = ``;
   @Output() onKeyUp: EventEmitter<string> = new EventEmitter<string>();
   @Output() optionSelected: EventEmitter<object> = new EventEmitter<object>();
   @Output() optionDeselected: EventEmitter<object> = new EventEmitter<object>();
   @Output() optionsCleared: EventEmitter<string> = new EventEmitter<string>();
   private listeners: Array<any> = [];
+  private originalPlaceholder: string = ``;
+  private inputField: any;
 
   override ngOnInit(): void {
     super.ngOnInit();
     this.ddsInitializer = `Dropdown`;
     this.useBackend = stringToBoolean(this.useBackend);
+    this.useXClear = stringToBoolean(this.useXClear);
     this.parseData();
   }
 
   override ngAfterViewInit() {
     super.ngAfterViewInit();
-    const dropdownNotice = this.ddsElement.querySelector(
-      `.dds__dropdown__notice`
-    );
-    const dropdownInput = this.ddsElement.querySelector(
-      `.dds__dropdown__input-field`
-    );
+    const dropdownNotice = this.ddsElement.querySelector(`.dds__dropdown__notice`);
+    const dropdownInput = this.ddsElement.querySelector(`.dds__dropdown__input-field`);
     const dropdownClear = this.ddsElement.querySelector(`.dds__tag`);
+    if (!this.originalPlaceholder) {
+        this.originalPlaceholder = this.ddsElement.querySelector(`input`).placeholder;
+        this.inputField = this.ddsElement.querySelector(`input`);
+      }
     const handleUpFinal = () => {
       dropdownNotice.innerText = ``;
       this.onKeyUp.emit(dropdownInput.value);
@@ -52,7 +57,7 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
         dropdownNotice.innerText = this.ddsOptions.noOptionsLabel;
       }
     };
-    const handleClear = (e: any) => {
+    const handleClearEvent = (e: any) => {
       if (!e.target.title) {
         // the "X" button doesn't have a title, but the button itself does
         this.optionsCleared.emit(this.ddsComponent.getValue());
@@ -67,7 +72,7 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
     }
     if (dropdownClear && !this.listeners.includes(`dropdownClear`)) {
       this.listeners.push(`dropdownClear`);
-      dropdownClear.addEventListener(`click`, handleClear);
+      dropdownClear.addEventListener(`click`, handleClearEvent);
     }
     if (!this.listeners.includes(`clicking`)) {
       this.listeners.push(`clicking`);
@@ -107,6 +112,21 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
           }
         }
       });
+    }
+    if (!this.listeners.includes(`changeevent`)) {
+        this.listeners.push(`changeevent`);
+        this.ddsElement.addEventListener(`ddsDropdownSelectionChangeEvent`, (e: Event) => {
+            if (this.useXClear) {
+                const clearButton = this.ddsElement.querySelector(`.ddsc__dropdown__button--clear`);
+                if (this.ddsComponent.getValue().length > 0) {
+                    clearButton.classList.remove(`dds__d-none`);
+                    this.clearPlaceholder();
+                  } else {
+                    clearButton.classList.add(`dds__d-none`);
+                    this.resetPlaceholder();
+                  }
+            }
+        });
     }
   }
 
@@ -164,5 +184,21 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
     }
     this.ddsComponent.dispose();
     this.initializeNow();
+  }
+
+  clearPlaceholder () {
+    if (this.inputField) {
+        this.inputField.removeAttribute(`placeholder`);
+    }
+  }
+  
+  resetPlaceholder () {
+    if (this.inputField && this.originalPlaceholder) {
+        this.inputField.setAttribute(`placeholder`, this.originalPlaceholder);
+    }
+  }
+
+  handleClear() {
+    this.ddsComponent.clearSelection();
   }
 }
