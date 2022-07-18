@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { DdsComponent } from '../helpers/dds.component';
 import { stringToBoolean } from '../helpers/dds.helpers';
+import { MessageBarService, toBarState } from "./messagebar.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: `dds-messagebar`,
@@ -17,6 +19,11 @@ export class MessageBarComponent
   @Input() hide: any = `false`;
   @Input() layout: string = 'contextual';
   //   @Input() layout: "contextual" | "global" = "contextual";
+  subscription!: Subscription;
+
+  constructor(private messageBarState: MessageBarService) {
+    super();
+  }
 
   // @ts-ignore
   ngOnInit(): void {
@@ -42,23 +49,40 @@ export class MessageBarComponent
     this.variant = `dds__message-bar--${this.variant}`;
     this.hide = stringToBoolean(this.hide);
     if (this.hide && this.classList.indexOf(`dds__d-none`) === -1) {
-        this.classList += ` dds__d-none`;
+      this.classList += ` dds__d-none`;
     }
+    this.subscription = this.messageBarState.currentState.subscribe(
+      (mbState) => {
+        switch (mbState) {
+            case toBarState.open:
+                this.open();
+                break;
+            case toBarState.closed:
+                this.close();
+                break;
+        }
+      }
+    );
   }
 
   override ngAfterViewInit(): void {
     super.ngAfterViewInit();
-    if (this.hide && !this.ddsElement.classList.contains(`dds__message-bar--hide`)) {
+    if (
+      this.hide &&
+      !this.ddsElement.classList.contains(`dds__message-bar--hide`)
+    ) {
       this.close();
     }
   }
 
   close = () => {
+    console.log("CLOSING", this.ddsComponent);
     if (this.ddsComponent) this.ddsComponent.closeMessageBar();
   };
 
   open = () => {
-    this.classList = this.classList.replace(/ dds__d-none/g, ``);
+    console.log("OPENING", this.ddsComponent)
+    this.classList = this.classList.replace(/dds__d-none/g, ``);
     if (this.ddsComponent) this.ddsComponent.showMessageBar();
   };
 }
