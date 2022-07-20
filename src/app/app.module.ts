@@ -24,6 +24,7 @@ import { LoadPageComponent } from "./pages/load/load.page";
 import { MessageBarPageComponent } from "./pages/messagebar/messagebar.page";
 import { ModalPageComponent } from "./pages/modal/modal.page";
 import { MoreLessPageComponent } from "./pages/moreless/moreless.page";
+import { NotificationPageComponent } from "./pages/notification/notification.page";
 import { PaginationPageComponent } from "./pages/pagination/pagination.page";
 import { PopoverPageComponent } from "./pages/popover/popover.page";
 import { ProgressPageComponent } from "./pages/progress/progress.page";
@@ -54,6 +55,7 @@ import { LoadComponent } from "./lib/load/load.component";
 import { MessageBarComponent } from "./lib/messagebar/messagebar.component";
 import { ModalComponent } from "./lib/modal/modal.component";
 import { MoreLessComponent } from "./lib/moreless/moreless.component";
+import { NotificationComponent } from "./lib/notification/notification.component";
 import { PaginationComponent } from "./lib/pagination/pagination.component";
 import { PopoverComponent } from "./lib/popover/popover.component";
 import { ProgressComponent } from "./lib/progress/progress.component";
@@ -89,6 +91,7 @@ const appRoutes: Routes = [
   { path: "messagebar", component: MessageBarPageComponent },
   { path: "modal", component: ModalPageComponent },
   { path: "moreless", component: MoreLessPageComponent },
+  { path: "notification", component: NotificationPageComponent },
   { path: "pagination", component: PaginationPageComponent },
   { path: "popover", component: PopoverPageComponent },
   { path: "progress", component: ProgressPageComponent },
@@ -118,6 +121,7 @@ const components = [
   MessageBarComponent,
   ModalComponent,
   MoreLessComponent,
+  NotificationComponent,
   PaginationComponent,
   PopoverComponent,
   ProgressComponent,
@@ -149,6 +153,7 @@ const pages = [
   MessageBarPageComponent,
   ModalPageComponent,
   MoreLessPageComponent,
+  NotificationPageComponent,
   PaginationPageComponent,
   PopoverPageComponent,
   ProgressPageComponent,
