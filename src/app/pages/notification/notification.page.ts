@@ -35,15 +35,10 @@ export class NotificationPageComponent {
   }
 
   notificationClosed(data: any){
-    console.log(data);
-    console.log("Before delete");
-    console.log(this.newNotificationList);
     let oldObj = this.newNotificationList.find((n:NotificationData) => n.elementId == data.elementId);
     if (oldObj){
       let index = this.newNotificationList.indexOf(oldObj);
       this.newNotificationList.splice(index, 1);
     }
-    console.log("After delete");
-    console.log(this.newNotificationList);
   }
 }
