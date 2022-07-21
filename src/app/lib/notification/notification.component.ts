@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { DdsComponent } from '../helpers/dds.component';
 import { Uuid, stringToBoolean, setElementId } from '../helpers/dds.helpers';
 
@@ -11,6 +11,7 @@ declare const DDS: any;
 export class NotificationComponent extends DdsComponent {
   @Input() parentElement: any;
   @Input() timeout: number = 0;
+  @Output() closed = new EventEmitter();
 
   override ngOnInit() {
     super.ngOnInit();
@@ -46,10 +47,16 @@ export class NotificationComponent extends DdsComponent {
     if (!this.ddsOptions.notificationCount) { this.ddsOptions.notificationCount = 1; }
     if (!this.ddsOptions.titleIconType) { this.ddsOptions.titleIconType = 'font-icon'; }
     if (this.parentElement) {
-        this.ddsComponent = DDS.Notification(this.parentElement);
+        this.ddsComponent = DDS.Notification(this.ddsOptions, this.parentElement);
     } else {
         this.ddsComponent = DDS.Notification(this.ddsOptions);
     }
+    setTimeout(() => {
+        this.ddsComponent.element.addEventListener("ddsNotificationClosingEvent", (data: any)=> {
+            data["elementId"] = this.elementId;
+            this.closed.emit(data);
+        });
+    }, 100);
     if (this.timeout > 0) {
         setTimeout(() => {
             this.ddsComponent.hide();

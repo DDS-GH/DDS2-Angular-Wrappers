@@ -1,5 +1,10 @@
 import { Component } from "@angular/core";
 
+class NotificationData{
+  
+  constructor(public elementId: string, public options: any, public timeout: number = 10){}
+}
+
 @Component({
   templateUrl: "./notification.page.html"
 })
@@ -20,4 +25,20 @@ export class NotificationPageComponent {
     titleIconType: "font-icon",
   };
   public timeout: number = 4;
+  newNotificationList: NotificationData[] = [];
+  notificationId = 1;
+
+  newNotification(){
+    let newNoti = new NotificationData(`notification${this.notificationId}`, this.ddsOptions, 10);
+    this.newNotificationList.push(newNoti);
+    this.notificationId += 1;
+  }
+
+  notificationClosed(data: any){
+    let oldObj = this.newNotificationList.find((n:NotificationData) => n.elementId == data.elementId);
+    if (oldObj){
+      let index = this.newNotificationList.indexOf(oldObj);
+      this.newNotificationList.splice(index, 1);
+    }
+  }
 }
