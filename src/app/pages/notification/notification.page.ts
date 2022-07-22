@@ -14,22 +14,44 @@ export class NotificationPageComponent {
     title: "title",
     messageBody: "messageBody",
     timeStamp: `now`,
-    primaryAction: ()=>{alert('hello')},
-    primaryActionText: "primaryActionText",
-    secondaryAction: ()=>{
-        // @ts-ignore
-        window.top.location.href="http://www.dell.com/"
-    },
-    secondaryActionText: "Go to Dell.com",
     titleIcon: "dds__icon--airplane", 
     titleIconType: "font-icon",
   };
-  public timeout: number = 4;
+  public timeout: number = 3;
   newNotificationList: NotificationData[] = [];
   notificationId = 1;
 
   newNotification(){
-    let newNoti = new NotificationData(`notification${this.notificationId}`, this.ddsOptions, 3);
+    // toggle the action buttons on or off
+    let optionsToUse;
+    if (this.notificationId%2 !== 0) {
+        optionsToUse = {
+            closeIcon: true,
+            title: "title",
+            messageBody: "messageBody",
+            timeStamp: `now`,
+            titleIcon: "dds__icon--airplane", 
+            titleIconType: "font-icon",
+            primaryAction: ()=>{alert('hello')},
+            primaryActionText: "primaryActionText",
+            secondaryAction: ()=>{
+                // @ts-ignore
+                window.top.location.href="http://www.dell.com/"
+            },
+            secondaryActionText: "Go to Dell.com",        
+        }
+    } else {
+        optionsToUse = {
+            closeIcon: true,
+            title: "title",
+            messageBody: "messageBody",
+            timeStamp: `now`,
+            titleIcon: "dds__icon--airplane", 
+            titleIconType: "font-icon",
+        };
+    }
+    // create a new notification
+    let newNoti = new NotificationData(`notification${this.notificationId}`, optionsToUse, 3);
     this.newNotificationList.push(newNoti);
     this.notificationId += 1;
   }
