@@ -7,12 +7,15 @@
         </dds-notification>
 
         <button class="dds__button" (click)="newNotification()">New Notification</button>
-        <dds-notification 
-            (closed)="notificationClosed($event)"
-            [elementId]="item.elementId"
-            [ddsOptions]="item.options"
-            [timeout]="item.timeout"
-            *ngFor="let item of newNotificationList">
-        </dds-notification>
+        <h3 style="text-align: left;">Notifications in Queue: {{newNotificationList.length > 3 ? newNotificationList.length - 3 : 0}}</h3>
+        <div *ngFor="let item of newNotificationList; let i = index">
+            <dds-notification 
+                (closed)="notificationClosed($event)"
+                [elementId]="item.elementId"
+                [ddsOptions]="item.options"
+                [timeout]="item.timeout"
+                *ngIf="i < 3">
+            </dds-notification>
+        </div>
     </div>
 </div>

@@ -29,7 +29,7 @@ export class NotificationPageComponent {
   notificationId = 1;
 
   newNotification(){
-    let newNoti = new NotificationData(`notification${this.notificationId}`, this.ddsOptions, 10);
+    let newNoti = new NotificationData(`notification${this.notificationId}`, this.ddsOptions, 3);
     this.newNotificationList.push(newNoti);
     this.notificationId += 1;
   }
