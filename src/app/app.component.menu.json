@@ -137,6 +137,11 @@
     "tags": ["all", "input", "search"]
   },
   {
+    "icon": "upload",
+    "text": "FileInput",
+    "tags": ["all", "input"]
+  },
+  {
     "icon": "full-screen",
     "text": "MoreLess",
     "tags": ["all", "layout", "info"]
