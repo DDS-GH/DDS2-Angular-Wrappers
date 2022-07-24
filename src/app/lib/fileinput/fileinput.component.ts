@@ -20,8 +20,4 @@ export class FileInputComponent extends DdsComponent {
     }
     this.ddsInitializer = `FileInput`;
   }
-
-  override ngAfterViewInit() {
-    super.ngAfterViewInit();
-  }
 }
