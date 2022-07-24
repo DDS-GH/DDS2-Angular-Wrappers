@@ -12,11 +12,13 @@ export class NotificationComponent extends DdsComponent {
   @Input() parentElement: any;
   @Input() timeout: number = 0;
   @Output() closed = new EventEmitter();
+  private autoDismissEvent: any;
 
   override ngOnInit() {
     super.ngOnInit();
-    this.elementId = setElementId(this.elementId);
-    if (this.ddsOptions.timeStamp === `now`) { 
+    const callbacks: Array<any> = [];
+    let newClassName: string = ``; // to generate a unique class for hiding this instance.  Dell CSP forbids inline style usage
+    if (this.ddsOptions.timeStamp === `now`) {
         const now = (() => {
             const d = new Date(); return `${d.getHours()}:${this.minutes(d.getMinutes())}`;
         })();
@@ -25,23 +27,35 @@ export class NotificationComponent extends DdsComponent {
     if (!this.ddsOptions.title) { this.ddsOptions.title = `&nbsp;`; }
     if (!this.ddsOptions.messageBody) { this.ddsOptions.messageBody = `&nbsp;`; }
     if (!this.ddsOptions.timeStamp) { 
-        this.ddsOptions.timeStamp = `&nbsp;`; 
-        this.addClass(`timeStamp`, `.dds__notification__time-stamp {
-            display: none !important;
-        }`);
+        this.ddsOptions.timeStamp = `&nbsp;`;
+        newClassName = `ddsc__timeStamp--${this.elementId}`;
+        this.classList += ` ${newClassName}`;
+        callbacks.push(() => {
+            this.addClass(newClassName, `#${this.elementId} .dds__notification__time-stamp {
+                display: none !important;
+            }`);
+        });
     }
     if (!this.ddsOptions.primaryAction) {
         this.ddsOptions.primaryAction = ()=>{console.warn('')};
-        this.addClass(`primaryAction`, `.dds__notification__body .dds__button--primary {
-            display: none !important;
-        }`);
+        newClassName = `ddsc__primaryAction--${this.elementId}`;
+        this.classList += ` ${newClassName}`;
+        callbacks.push(() => {
+            this.addClass(newClassName, `#${this.elementId} .dds__notification__body .dds__button--primary {
+                display: none !important;
+            }`);
+        });
     }
     if (!this.ddsOptions.primaryActionText) { this.ddsOptions.primaryActionText = '&nbsp;'; }
     if (!this.ddsOptions.secondaryAction) {
         this.ddsOptions.secondaryAction = ()=>{console.warn('')};
-        this.addClass(`secondaryAction`, `.dds__notification__body .dds__button--secondary {
-            display: none !important;
-        }`);
+        newClassName = `ddsc__secondaryAction--${this.elementId}`;
+        this.classList += ` ${newClassName}`;
+        callbacks.push(() => {
+            this.addClass(newClassName, `#${this.elementId} .dds__notification__body .dds__button--secondary {
+                display: none !important;
+            }`);
+        });
     }
     if (!this.ddsOptions.secondaryActionText) { this.ddsOptions.secondaryActionText = '&nbsp;'; }
     if (!this.ddsOptions.notificationCount) { this.ddsOptions.notificationCount = 1; }
@@ -51,16 +65,38 @@ export class NotificationComponent extends DdsComponent {
     } else {
         this.ddsComponent = DDS.Notification(this.ddsOptions);
     }
+
+    this.ddsOptions.timeStamp = undefined;
+    this.ddsOptions.primaryAction = undefined;
+    this.ddsOptions.secondaryAction = undefined;
+
+    /* -------------------------
+    *  Notification, being a generated element, has no template to tap into, so we 
+    *  must manually set ID and classes
+    *  
+    */
     setTimeout(() => {
-        this.ddsComponent.element.addEventListener("ddsNotificationClosingEvent", (data: any)=> {
+        this.ddsElement = this.ddsComponent.element;
+        this.ddsElement.id = this.elementId;
+        if (this.classList.trim().length > 0) {
+            this.classList.trim().split(' ').forEach(classname => {
+                this.ddsElement.classList.add(classname);
+            });
+        }
+        callbacks.forEach(cb => cb());
+        this.ddsComponent.element.addEventListener("ddsNotificationClosingEvent", (data: any) => {
             data["elementId"] = this.elementId;
             this.closed.emit(data);
+            if (this.timeout > 0) {
+                clearTimeout(this.autoDismissEvent);
+            }
         });
     }, 100);
     if (this.timeout > 0) {
-        setTimeout(() => {
+        this.autoDismissEvent = setTimeout(() => {
             this.ddsComponent.hide();
         }, this.timeout * 1000);
+
     }
   }
 
@@ -70,7 +106,9 @@ export class NotificationComponent extends DdsComponent {
         const css = document.createElement('style');
         css.id = styleId;
         css.appendChild(document.createTextNode(styles));
-        document.getElementsByTagName("head")[0].appendChild(css);
+        setTimeout(() => {
+            this.ddsElement.appendChild(css)
+        });
     }
   }
 
