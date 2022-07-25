@@ -17,6 +17,7 @@ import { CheckboxPageComponent } from "./pages/checkbox/checkbox.page";
 import { DatePickerPageComponent } from "./pages/datepicker/datepicker.page";
 import { DrawerPageComponent } from "./pages/drawer/drawer.page";
 import { DropdownPageComponent } from "./pages/dropdown/dropdown.page";
+import { FileInputPageComponent } from "./pages/fileinput/fileinput.page";
 import { FilterHorizontalPageComponent } from "./pages/filter/horizontal.page";
 import { FilterVerticalPageComponent } from "./pages/filter/vertical.page";
 import { FormPageComponent } from "./pages/form/form.page";
@@ -49,6 +50,7 @@ import { CheckboxComponent } from "./lib/checkbox/checkbox.component";
 import { DatePickerComponent } from "./lib/datepicker/datepicker.component";
 import { DrawerComponent } from "./lib/drawer/drawer.component";
 import { DropdownComponent } from "./lib/dropdown/dropdown.component";
+import { FileInputComponent } from "./lib/fileinput/fileinput.component";
 import { FormComponent } from "./lib/form/form.component";
 import { HeaderComponent } from "./lib/header/header.component";
 import { LoadComponent } from "./lib/load/load.component";
@@ -84,6 +86,7 @@ const appRoutes: Routes = [
   { path: "datepicker", component: DatePickerPageComponent },
   { path: "drawer", component: DrawerPageComponent },
   { path: "dropdown", component: DropdownPageComponent },
+  { path: "fileinput", component: FileInputPageComponent },
   { path: "form", component: FormPageComponent },
   { path: "load", component: LoadPageComponent },
   { path: "horizontal", component: FilterHorizontalPageComponent },
@@ -115,6 +118,7 @@ const components = [
   DatePickerComponent,
   DrawerComponent,
   DropdownComponent,
+  FileInputComponent,
   FormComponent,
   HeaderComponent,
   LoadComponent,
@@ -146,6 +150,7 @@ const pages = [
   DatePickerPageComponent,
   DrawerPageComponent,
   DropdownPageComponent,
+  FileInputPageComponent,
   FilterHorizontalPageComponent,
   FilterVerticalPageComponent,
   FormPageComponent,
