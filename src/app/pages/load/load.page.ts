@@ -255,6 +255,7 @@ export class LoadPageComponent implements OnInit {
   ];
   public mindex: number = 0;
   public mode = `inline`;
+  public hidden: boolean = true; // GLOBAL is always hidden on initialization
   public resetCount: any = ``;
 
   ngOnInit(): void {

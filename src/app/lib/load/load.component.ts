@@ -8,7 +8,7 @@ import {
   ViewChild
 } from "@angular/core";
 import { DdsComponent } from "../helpers/dds.component";
-import { setElementId } from "../helpers/dds.helpers";
+import { setElementId, stringToBoolean } from "../helpers/dds.helpers";
 
 @Component({
   selector: `dds-load`,
@@ -21,12 +21,17 @@ export class LoadComponent extends DdsComponent implements OnInit, OnChanges {
   @Input() mode: string = `global`;
   @Input() placement: string = `top`;
   @Input() size: string = `sm`;
+  @Input() hidden: any = `false`;
   public stateOn: boolean = true;
 
   override ngOnInit(): void {
     super.ngOnInit();
     this.ddsInitializer = `LoadingIndicator`;
     this.elementId = setElementId(this.elementId);
+    this.hidden = stringToBoolean(this.hidden);
+    if (this.hidden) {
+        this.stateOn = false;
+    }
     if (this.size) {
       switch (this.size) {
         case `small`:
@@ -57,7 +62,7 @@ export class LoadComponent extends DdsComponent implements OnInit, OnChanges {
 
   keepStateWithMode() {
     if (this.mode !== `inline`) {
-      if (this.ddsComponent.dispose) {
+      if (this.ddsComponent && this.ddsComponent.dispose) {
         this.ddsComponent.dispose();
         this.ddsComponent.show = undefined;
         this.ddsComponent.hide = undefined;

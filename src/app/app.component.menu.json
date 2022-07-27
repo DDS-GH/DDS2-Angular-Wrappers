@@ -21,6 +21,11 @@
     "tags": ["all", "simple", "info"]
   },
   {
+    "icon": "alert-info-cir",
+    "text": "Notification",
+    "tags": ["all", "secondary", "info"]
+  },
+  {
     "icon": "chat-dots",
     "text": "Popover",
     "tags": ["all", "info"],
@@ -130,6 +135,11 @@
     "icon": "pencil",
     "text": "TextInput",
     "tags": ["all", "input", "search"]
+  },
+  {
+    "icon": "upload",
+    "text": "FileInput",
+    "tags": ["all", "input"]
   },
   {
     "icon": "full-screen",

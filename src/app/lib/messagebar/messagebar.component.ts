@@ -76,12 +76,10 @@ export class MessageBarComponent
   }
 
   close = () => {
-    console.log("CLOSING", this.ddsComponent);
     if (this.ddsComponent) this.ddsComponent.closeMessageBar();
   };
 
   open = () => {
-    console.log("OPENING", this.ddsComponent)
     this.classList = this.classList.replace(/dds__d-none/g, ``);
     if (this.ddsComponent) this.ddsComponent.showMessageBar();
   };

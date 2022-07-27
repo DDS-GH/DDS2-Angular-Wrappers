@@ -17,6 +17,7 @@ import { CheckboxPageComponent } from "./pages/checkbox/checkbox.page";
 import { DatePickerPageComponent } from "./pages/datepicker/datepicker.page";
 import { DrawerPageComponent } from "./pages/drawer/drawer.page";
 import { DropdownPageComponent } from "./pages/dropdown/dropdown.page";
+import { FileInputPageComponent } from "./pages/fileinput/fileinput.page";
 import { FilterHorizontalPageComponent } from "./pages/filter/horizontal.page";
 import { FilterVerticalPageComponent } from "./pages/filter/vertical.page";
 import { FormPageComponent } from "./pages/form/form.page";
@@ -24,6 +25,7 @@ import { LoadPageComponent } from "./pages/load/load.page";
 import { MessageBarPageComponent } from "./pages/messagebar/messagebar.page";
 import { ModalPageComponent } from "./pages/modal/modal.page";
 import { MoreLessPageComponent } from "./pages/moreless/moreless.page";
+import { NotificationPageComponent } from "./pages/notification/notification.page";
 import { PaginationPageComponent } from "./pages/pagination/pagination.page";
 import { PopoverPageComponent } from "./pages/popover/popover.page";
 import { ProgressPageComponent } from "./pages/progress/progress.page";
@@ -48,12 +50,14 @@ import { CheckboxComponent } from "./lib/checkbox/checkbox.component";
 import { DatePickerComponent } from "./lib/datepicker/datepicker.component";
 import { DrawerComponent } from "./lib/drawer/drawer.component";
 import { DropdownComponent } from "./lib/dropdown/dropdown.component";
+import { FileInputComponent } from "./lib/fileinput/fileinput.component";
 import { FormComponent } from "./lib/form/form.component";
 import { HeaderComponent } from "./lib/header/header.component";
 import { LoadComponent } from "./lib/load/load.component";
 import { MessageBarComponent } from "./lib/messagebar/messagebar.component";
 import { ModalComponent } from "./lib/modal/modal.component";
 import { MoreLessComponent } from "./lib/moreless/moreless.component";
+import { NotificationComponent } from "./lib/notification/notification.component";
 import { PaginationComponent } from "./lib/pagination/pagination.component";
 import { PopoverComponent } from "./lib/popover/popover.component";
 import { ProgressComponent } from "./lib/progress/progress.component";
@@ -82,6 +86,7 @@ const appRoutes: Routes = [
   { path: "datepicker", component: DatePickerPageComponent },
   { path: "drawer", component: DrawerPageComponent },
   { path: "dropdown", component: DropdownPageComponent },
+  { path: "fileinput", component: FileInputPageComponent },
   { path: "form", component: FormPageComponent },
   { path: "load", component: LoadPageComponent },
   { path: "horizontal", component: FilterHorizontalPageComponent },
@@ -89,6 +94,7 @@ const appRoutes: Routes = [
   { path: "messagebar", component: MessageBarPageComponent },
   { path: "modal", component: ModalPageComponent },
   { path: "moreless", component: MoreLessPageComponent },
+  { path: "notification", component: NotificationPageComponent },
   { path: "pagination", component: PaginationPageComponent },
   { path: "popover", component: PopoverPageComponent },
   { path: "progress", component: ProgressPageComponent },
@@ -112,12 +118,14 @@ const components = [
   DatePickerComponent,
   DrawerComponent,
   DropdownComponent,
+  FileInputComponent,
   FormComponent,
   HeaderComponent,
   LoadComponent,
   MessageBarComponent,
   ModalComponent,
   MoreLessComponent,
+  NotificationComponent,
   PaginationComponent,
   PopoverComponent,
   ProgressComponent,
@@ -142,6 +150,7 @@ const pages = [
   DatePickerPageComponent,
   DrawerPageComponent,
   DropdownPageComponent,
+  FileInputPageComponent,
   FilterHorizontalPageComponent,
   FilterVerticalPageComponent,
   FormPageComponent,
@@ -149,6 +158,7 @@ const pages = [
   MessageBarPageComponent,
   ModalPageComponent,
   MoreLessPageComponent,
+  NotificationPageComponent,
   PaginationPageComponent,
   PopoverPageComponent,
   ProgressPageComponent,
