@@ -46,8 +46,14 @@
       >
         {{warning}}
       </small>
-      <div [attr.id]="elementId + '-feedback'" class="dds__invalid-feedback"></div>
-      <i (click)="handleClear()" class="dds__icon dds__icon--close-x ddsc__dropdown__button--clear dds__d-none"></i>
+      <div
+        [attr.id]="elementId + '-feedback'"
+        class="dds__invalid-feedback"
+      ></div>
+      <i
+        (click)="handleClear()"
+        class="dds__icon dds__icon--close-x ddsc__dropdown__button--clear dds__d-none"
+      ></i>
     </div>
   </div>
   <div
@@ -78,9 +84,9 @@
           >
             <ng-container *ngFor="let option of group.options; let o = index">
               <li
-                [style]="{'display': option.hidden ? 'none' : 'block'}"
                 class="dds__dropdown__item"
                 [class.ng__dropdown__item--hidden]="option.stored"
+                [class.ddsc__dropdown__item--hidden]="option.hidden"
                 role="none"
               >
                 <button
