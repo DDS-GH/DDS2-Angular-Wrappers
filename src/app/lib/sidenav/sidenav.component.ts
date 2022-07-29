@@ -14,6 +14,7 @@ const icons: any = {
 })
 export class SidenavComponent extends DdsComponent {
   @Input() closeOnClick: any = false;
+  private state: any = {};
 
   // @ts-ignore
   ngOnInit() {
@@ -25,12 +26,27 @@ export class SidenavComponent extends DdsComponent {
   // @ts-ignore
   ngAfterViewInit(): void {
     super.ngAfterViewInit();
+    
+    this.state.open = this.ddsElement.getAttribute(`aria-expanded`) === `true`;
+    this.ddsElement.addEventListener(`ddsSideNavExpandedEvent`, () => {
+        setTimeout(() => {
+            this.state.open = true;
+        });
+    });
+    this.ddsElement.addEventListener(`ddsSideNavCollapsedEvent`, () => {
+        setTimeout(() => {
+            this.state.open = false;
+        });
+    });
+
     if (this.closeOnClick) {
       this.ddsElement
         .querySelectorAll(`.dds__side-nav__item`)
         .forEach((el: any) => {
-          el.addEventListener(`click`, () => {
-            this.ddsElement.SideNav.collapse();
+          el.addEventListener(`click`, (e: any) => {
+            if (this.state.open) {
+                this.ddsElement.SideNav.collapse();
+            }
           });
         });
     }
