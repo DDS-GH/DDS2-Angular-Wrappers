@@ -94,7 +94,10 @@
     </defs>
   </svg>
 
-  <dds-sidenav #pageSidenav init="now" ddsOptions='{"expand": true}'>
+  <dds-sidenav #pageSidenav init="now" ddsOptions='{"expand": true}' closeOnClick="true">
+    <dds-sidenav-item icon="dds__icon--home">
+        Home
+    </dds-sidenav-item>
     <dds-sidenav-menu
       icon="dds__icon--wrench-double"
       [hidden]="!isAdmin"
