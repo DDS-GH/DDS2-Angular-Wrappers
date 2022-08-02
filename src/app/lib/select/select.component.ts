@@ -9,6 +9,7 @@ export class SelectComponent extends DdsComponent {
   @Input() selectOptions!: Array<string>;
   @Input() label: string = ``;
   @Input() defaultValue: string = ``;
+  @Input() placeholder: string = ``;
   @Output() optionSelected: EventEmitter<string> = new EventEmitter<string>();
   private selectedValue: string = ``;
 
