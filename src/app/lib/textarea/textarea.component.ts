@@ -9,7 +9,7 @@ import { Uuid, stringToBoolean } from '../helpers/dds.helpers';
 export class TextAreaComponent extends DdsComponent {
   @ViewChild('textContainer') textContainer!: ElementRef;
   @ViewChild('srContainer') srContainer!: ElementRef;
-  @Input() isRequired: string = `false`;
+  @Input() required: string = `false`;
   @Input() maxLength: string = ``;
   public defaultText: string = ``;
   public srText: string = ``;
@@ -26,7 +26,7 @@ export class TextAreaComponent extends DdsComponent {
     this.textAreaId = `${this.ddsInitializer}-textarea${Uuid()}`;
     this.labelId = `${this.ddsInitializer}-label${Uuid()}`;
     this.helperId = `${this.ddsInitializer}-helper${Uuid()}`;
-    this.states.required = stringToBoolean(this.isRequired);
+    this.states.required = stringToBoolean(this.required);
   }
 
   override ngAfterViewInit() {

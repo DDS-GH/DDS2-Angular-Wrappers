@@ -100,6 +100,11 @@ export class NotificationComponent extends DdsComponent {
     }
   }
 
+  override ngAfterViewInit(): void {
+    super.ngAfterViewInit();
+    this.ddsComponent.element.id = this.elementId;
+  }
+
   addClass(id: string, styles: string) {
     const styleId = `${id}_removal`;
     if (!document.getElementById(styleId)) {

@@ -20,6 +20,7 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
   @Input() groups: any;
   @Input() useBackend: any = `false`;
   @Input() useXClear: any = `false`;
+  @Input() required: any = `false`;
   @Input() warning: string = ``;
   @Input() placeholder: string = ``;
   @Output() onKeyUp: EventEmitter<string> = new EventEmitter<string>();
@@ -35,6 +36,7 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
     this.ddsInitializer = `Dropdown`;
     this.useBackend = stringToBoolean(this.useBackend);
     this.useXClear = stringToBoolean(this.useXClear);
+    this.required = stringToBoolean(this.required);
     this.parseData();
   }
 
