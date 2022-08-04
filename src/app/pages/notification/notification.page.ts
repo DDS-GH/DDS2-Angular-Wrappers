@@ -17,7 +17,7 @@ export class NotificationPageComponent {
     titleIcon: "dds__icon--airplane", 
     titleIconType: "font-icon",
   };
-  public timeout: number = 3;
+  public timeout: number = 30;
   newNotificationList: NotificationData[] = [];
   notificationId = 1;
 
