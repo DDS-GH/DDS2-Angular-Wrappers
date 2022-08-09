@@ -60,7 +60,7 @@ export class TablePageComponent implements AfterViewInit {
         value: `Peking`,
       },
     ],
-    data: this.refinePool(),
+    data: this.pool.data,
     pagination: {
       topics: [this.paginationId],
       rowsPerPage: this.pool.page.size,
@@ -93,7 +93,7 @@ export class TablePageComponent implements AfterViewInit {
     setTimeout(() => {
       this.handleAdd(35);
       this.addListeners();
-      this.initializeTooltips();
+      this.adjustRowContents();
       // @ts-ignore
       this.loader.toggle();
     }, 750);
@@ -124,13 +124,13 @@ export class TablePageComponent implements AfterViewInit {
     paginationEvents.forEach((pe) => {
       this.listeners.push(
         // @ts-ignore
-        this.myPagination.ddsElement.addEventListener(pe, debounce(() => this.initializeTooltips(), 50))
+        this.myPagination.ddsElement.addEventListener(pe, debounce(() => this.adjustRowContents(), 50))
       );
     });
     tableEvents.forEach((pe) => {
       this.listeners.push(
         // @ts-ignore
-        this.myTable.ddsElement.addEventListener(pe, debounce(() => this.initializeTooltips(), 50))
+        this.myTable.ddsElement.addEventListener(pe, debounce(() => this.adjustRowContents(), 50))
       );
     });
   }
@@ -159,7 +159,7 @@ export class TablePageComponent implements AfterViewInit {
   }
 
   reinitializeTable() {
-    this.config.data = this.refinePool();
+    this.config.data = this.pool.data;
     this.paginationOptions.options.totalItems = this.config.data.length;
 
     // @ts-ignore
@@ -180,7 +180,7 @@ export class TablePageComponent implements AfterViewInit {
 
     // @ts-ignore
     this.myTable.initializeNow();
-    this.initializeTooltips();
+    this.adjustRowContents();
   }
 
   handleSelect(e: any) {
@@ -226,7 +226,7 @@ export class TablePageComponent implements AfterViewInit {
     } else {
       this.sorting = e.sortBy;
     }
-    this.initializeTooltips();
+    this.adjustRowContents();
   }
 
   handleSticky(e: any) {
@@ -265,23 +265,7 @@ export class TablePageComponent implements AfterViewInit {
     }
   }
 
-  refinePool() {
-    // const length = this.pool.data.length;
-    // const size = this.pool.page.size;
-    // const page = this.pool.page.current;
-    // let localSize = size;
-    // if (length === 0) {
-    //   return [];
-    // }
-    // if (length < page * size) {
-    //   localSize = length;
-    // } else if (length < page * size + size) {
-    //   localSize = length;
-    // }
-    return this.pool.data;
-  }
-
-  initializeTooltips() {
+  adjustRowContents() {
     const element = this.viewContainerRef.element.nativeElement as HTMLElement;
     injectComponent(
       this.applicationRef,
@@ -290,5 +274,19 @@ export class TablePageComponent implements AfterViewInit {
       TooltipComponent,
       element.querySelectorAll('tthold')
     );
+    
+    // While the DDS Table does not yet support adding and removing rows with an API call, we
+    // must reinitialize the table, which can cause extra rows to appear when paging backwards
+    // through the dataset. This will remove the extra rows, but it does have an unfortunate
+    // flickering effect.
+    // @ts-ignore
+    const pageSize = this.myPagination.ddsComponent.getPageSize();
+    // @ts-ignore
+    const tableRows = this.myTable.ddsElement.querySelectorAll(`.dds__tr`);
+    if (tableRows.length > pageSize) {
+        for (let intI = pageSize; intI < tableRows.length; intI++) {
+        tableRows[intI].remove();
+        }
+    }
   }
 }
