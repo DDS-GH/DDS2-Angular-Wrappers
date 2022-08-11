@@ -23,7 +23,8 @@ export class TablePaginationPageComponent implements AfterViewInit {
   @ViewChild(`myTable`) myTable!: ElementRef<HTMLElement>;
   @ViewChild(`paginationRef`) paginationRef!: ElementRef<HTMLElement>;
   public classList: string = `dds__table--compact`;
-  public sorting: string = `descending`;
+  public sortColumn: number = 0;
+  public sortBy: string = `ascending`;
   public pool: any = {
     data: [],
     page: {
@@ -35,7 +36,7 @@ export class TablePaginationPageComponent implements AfterViewInit {
     columns: [
       {
         value: `Khakis`,
-        sortBy: this.sorting,
+        sortBy: this.sortBy,
       },
       {
         value: `Cornish <tthold id="ht${Uuid()}" title="Tooltip Title">Tooltip Content</tthold>`,
@@ -72,20 +73,38 @@ export class TablePaginationPageComponent implements AfterViewInit {
       this.pool.page.size = e.detail.pageSize;
       this.reinitializeTable();
     };
-    // @ts-ignore
-    this.paginationRef.ddsElement.addEventListener(
-      `ddsPaginationPageChangedEvent`,
-      linkPool
-    );
-    // @ts-ignore
-    this.paginationRef.ddsElement.addEventListener(
+    const importantEvents = [
+      `ddsTableSortEvent`,
+      `ddsTableComponentRenderEvent`,
+      `ddsTableHeadRowStyleUpdatedEvent`,
+      `ddsTableHeadCellSortEvent`,
+      `ddsTableHeadCellStyleUpdatedEvent`,
+      `ddsTableHeadCellFocusChangedEvent`,
+      `ddsTableComponentRenderEvent`,
+      `ddsTableHeadRowSortEvent`,
       `ddsPaginationPageSizeChangedEvent`,
-      linkPool
-    );
+      `ddsPaginationPageChangedEvent`,
+    ];
+    importantEvents.forEach(ev => {
+        if (ev.toLowerCase().indexOf(`pagination`) > -1) {
+        // @ts-ignore
+        this.paginationRef.ddsElement.addEventListener(
+            `ddsPaginationPageChangedEvent`,
+            linkPool
+          );
+        } else 
+        // @ts-ignore
+        this.myTable.ddsElement.addEventListener(
+          `ddsPaginationPageChangedEvent`,
+          linkPool
+        );
+    });
   }
 
   handleAdd(e: number = 1) {
     for (let i = 0; i < e; i++) {
+      const current = new Date();
+      current.setDate(current.getDate() + i);
       const num: number = Uuid();
       const ttData: any = {
         id: `tt${num}`,
@@ -93,8 +112,8 @@ export class TablePaginationPageComponent implements AfterViewInit {
         content: `I used to run a dating service for chickens, but I was struggling to make hens meet.`,
       };
       this.pool.data.push([
+        { value: current },
         { value: `Quack ${num}<span class="dds__d-none rowId">${num}</span>` },
-        { value: `Moo?` },
         {
           value: `Joke? <tthold id="${ttData.id}" title="${ttData.title}">${ttData.content}</tthold>`,
         },
@@ -116,6 +135,8 @@ export class TablePaginationPageComponent implements AfterViewInit {
     }
     // @ts-ignore
     this.myTable.initializeNow();
+    // @ts-ignore
+    this.myTable.ddsComponent.sort( this.sortColumn, this.sortBy );
     this.initializeTooltips();
   }
 
@@ -146,21 +167,21 @@ export class TablePaginationPageComponent implements AfterViewInit {
 
   handleSort(e: any) {
     if (typeof e.detail === `number`) {
-      switch (this.sorting) {
+      switch (this.sortBy) {
         case `descending`:
-          this.sorting = `ascending`;
+          this.sortBy = `ascending`;
           break;
         case `ascending`:
-          this.sorting = `unsorted`;
+          this.sortBy = `unsorted`;
           break;
         case `unsorted`:
-          this.sorting = `descending`;
+          this.sortBy = `descending`;
           break;
       }
       // @ts-ignore
-      this.myTable.ddsComponent.sort(0, this.sorting);
+      this.myTable.ddsComponent.sort(this.sortColumn, this.sortBy);
     } else {
-      this.sorting = e.sortBy;
+      this.sortBy = e.sortBy;
     }
     this.initializeTooltips();
   }
@@ -175,6 +196,12 @@ export class TablePaginationPageComponent implements AfterViewInit {
   }
 
   refinePool() {
+    const addLeadingZeros = (n: any) => {
+      if (n <= 9) {
+        return '0' + n;
+      }
+      return n;
+    };
     const length = this.pool.data.length;
     const size = this.pool.page.size;
     const page = this.pool.page.current;
@@ -182,12 +209,37 @@ export class TablePaginationPageComponent implements AfterViewInit {
     if (length === 0) {
       return [];
     }
+    this.applySorting();
     if (length < page * size) {
       localSize = length;
     } else if (length < page * size + size) {
       localSize = length;
     }
+    // convert dates to short display names
+    this.pool.data.forEach((row: any) => {
+        row.forEach((column: any) => {
+            if (column.value instanceof Date) {
+                const theDate = column.value.getFullYear() + "-" + addLeadingZeros(column.value.getMonth() + 1) + "-" + addLeadingZeros(column.value.getDate());
+                column.value = theDate;
+            }
+        });
+    });
     return this.pool.data.slice(page * size, page * size + localSize);
+  }
+
+  applySorting() {
+    let self = this;
+    if (this.pool.data[0][this.sortColumn].value instanceof Date) {
+        if (this.sortBy === `ascending`) {
+            this.pool.data.sort(function(a: any, b: any){
+                return a[self.sortColumn].value - b[self.sortColumn].value;
+            });
+        } else {
+            this.pool.data.sort(function(a: any, b: any){
+                return b[self.sortColumn].value - a[self.sortColumn].value;
+            });
+        }
+    }
   }
 
   initializeTooltips() {

@@ -4,17 +4,12 @@ import {
   Component,
   ComponentFactoryResolver,
   ElementRef,
-  EmbeddedViewRef,
   Injector,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { ButtonComponent } from 'src/app/lib/button/button.component';
-import { Uuid } from 'src/app/lib/helpers/dds.helpers';
-import {
-  injectComponent,
-  InjectorCallback,
-} from 'src/app/lib/helpers/dds.injector';
+import { debounce, Uuid } from 'src/app/lib/helpers/dds.helpers';
+import { injectComponent } from 'src/app/lib/helpers/dds.injector';
 import { TooltipComponent } from 'src/app/lib/tooltip/tooltip.component';
 import { randomNumber } from 'src/app/utilities/mock';
 import { debug } from 'src/app/utilities/util';
@@ -29,6 +24,12 @@ import {
 })
 export class TablePageComponent implements AfterViewInit {
   @ViewChild(`myTable`) myTable!: ElementRef<HTMLElement>;
+  @ViewChild(`myPagination`) myPagination!: ElementRef<HTMLElement>;
+  @ViewChild(`loader`) loader!: ElementRef<HTMLElement>;
+
+  public tableId: string = `tableInstance`;
+  public paginationId: string = `paginationInstance`;
+  public loaderHidden: boolean = true; // global always starts hidden even if set to false here
   public classList: string = `dds__table--compact`;
   public sorting: string = `descending`;
   public mb = {
@@ -39,12 +40,11 @@ export class TablePageComponent implements AfterViewInit {
     variant: `error`,
     body: `No data is available to display.`,
   };
-
   public pool: any = {
     data: [],
     page: {
-      current: 0,
-      size: 6,
+      current: 1,
+      size: 5,
     },
   };
   public config: any = {
@@ -60,14 +60,19 @@ export class TablePageComponent implements AfterViewInit {
         value: `Peking`,
       },
     ],
-    data: this.refinePool(),
+    data: this.pool.data,
+    pagination: {
+      topics: [this.paginationId],
+      rowsPerPage: this.pool.page.size,
+      currentPage: this.pool.page.current,
+    },
   };
-  private tooltip: any = {};
   private emptyRow: Array<any> = [{ value: `` }, { value: `` }, { value: `` }];
+  private listeners: Array<any> = [];
   public selectedIndex?: string = undefined;
-  public pagination: any = {
+  public paginationOptions: any = {
     perPageSelected: this.pool.page.size,
-    perPageOptions: [6, 12, 24],
+    perPageOptions: [5, 8, 13],
     options: {
       currentPage: this.pool.page.current,
       totalItems: this.pool.page.size,
@@ -83,13 +88,51 @@ export class TablePageComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    this.handleAdd(5);
-    this.initializeTooltips();
-    const linkPool = (e: any) => {
-      this.pool.page.current = e.detail.currentPage - 1;
-      this.pool.page.size = e.detail.pageSize;
-      this.reinitializeTable();
-    };
+    // @ts-ignore
+    this.loader.toggle();
+    setTimeout(() => {
+      this.handleAdd(35);
+      this.addListeners();
+      this.adjustRowContents();
+      // @ts-ignore
+      this.loader.toggle();
+    }, 750);
+  }
+
+  addListeners() {
+    const paginationEvents = [
+      `ddsPaginationPreviousPageClickedEvent`,
+      `ddsPaginationPageSizeChangedEvent`,
+      `ddsPaginationPageChangedEvent`,
+      `ddsPaginationNextPageClickedEvent`,
+      `ddsPaginationLastPageClickedEvent`,
+      `ddsPaginationFirstPageClickedEvent`,
+    ];
+    const tableEvents = [
+      `ddsTableSortEvent`,
+      `ddsTableComponentRenderEvent`,
+      `ddsTableHeadRowStyleUpdatedEvent`,
+      `ddsTableHeadCellSortEvent`,
+      `ddsTableHeadCellStyleUpdatedEvent`,
+      `ddsTableHeadCellFocusChangedEvent`,
+      `ddsTableComponentRenderEvent`,
+      `ddsTableHeadRowSortEvent`,
+    ];
+    this.listeners.forEach((listener) => {
+      listener.removeEventListener(listener);
+    });
+    paginationEvents.forEach((pe) => {
+      this.listeners.push(
+        // @ts-ignore
+        this.myPagination.ddsElement.addEventListener(pe, debounce(() => this.adjustRowContents(), 50))
+      );
+    });
+    tableEvents.forEach((pe) => {
+      this.listeners.push(
+        // @ts-ignore
+        this.myTable.ddsElement.addEventListener(pe, debounce(() => this.adjustRowContents(), 50))
+      );
+    });
   }
 
   handleAdd(e: number = 1) {
@@ -108,7 +151,7 @@ export class TablePageComponent implements AfterViewInit {
         { value: `Quack ${num}<span class="dds__d-none rowId">${num}</span>` },
         { value: `Moo?` },
         {
-          value: `Joke? <tthold id="${ttData.id}" title="${ttData.title}">${ttData.content}</tthold>`,
+          value: `Joke? <tthold id="${ttData.id}" title="${ttData.title}" class="dds__d-none">${ttData.content}</tthold>`,
         },
       ]);
     }
@@ -116,7 +159,17 @@ export class TablePageComponent implements AfterViewInit {
   }
 
   reinitializeTable() {
-    this.config.data = this.refinePool();
+    this.config.data = this.pool.data;
+    this.paginationOptions.options.totalItems = this.config.data.length;
+
+    // @ts-ignore
+    if (this.myPagination.ddsComponent.dispose) {
+      // @ts-ignore
+      this.myPagination.ddsComponent.dispose();
+    }
+    // @ts-ignore
+    this.myPagination.initializeNow();
+
     // @ts-ignore
     this.myTable.ddsElement.innerHTML = ``;
     // @ts-ignore
@@ -124,9 +177,10 @@ export class TablePageComponent implements AfterViewInit {
       // @ts-ignore
       this.myTable.ddsComponent.dispose();
     }
+
     // @ts-ignore
     this.myTable.initializeNow();
-    this.initializeTooltips();
+    this.adjustRowContents();
   }
 
   handleSelect(e: any) {
@@ -172,7 +226,7 @@ export class TablePageComponent implements AfterViewInit {
     } else {
       this.sorting = e.sortBy;
     }
-    this.initializeTooltips();
+    this.adjustRowContents();
   }
 
   handleSticky(e: any) {
@@ -193,23 +247,25 @@ export class TablePageComponent implements AfterViewInit {
     this.reinitializeTable();
   }
 
-  refinePool() {
-    const length = this.pool.data.length;
-    const size = this.pool.page.size;
-    const page = this.pool.page.current;
-    let localSize = size;
-    if (length === 0) {
-      return [];
+  getPageSize() {
+    if (this.myPagination) {
+      // @ts-ignore
+      return this.myPagination.ddsComponent.getPageSize();
+    } else {
+      return this.pool.page.size;
     }
-    if (length < page * size) {
-      localSize = length;
-    } else if (length < page * size + size) {
-      localSize = length;
-    }
-    return this.pool.data;
   }
 
-  initializeTooltips() {
+  getCurrentPage() {
+    if (this.myPagination) {
+      // @ts-ignore
+      return this.myPagination.ddsComponent.getCurrentPage();
+    } else {
+      return this.pool.page.current;
+    }
+  }
+
+  adjustRowContents() {
     const element = this.viewContainerRef.element.nativeElement as HTMLElement;
     injectComponent(
       this.applicationRef,
@@ -218,5 +274,19 @@ export class TablePageComponent implements AfterViewInit {
       TooltipComponent,
       element.querySelectorAll('tthold')
     );
+    
+    // While the DDS Table does not yet support adding and removing rows with an API call, we
+    // must reinitialize the table, which can cause extra rows to appear when paging backwards
+    // through the dataset. This will remove the extra rows, but it does have an unfortunate
+    // flickering effect.
+    // @ts-ignore
+    const pageSize = this.myPagination.ddsComponent.getPageSize();
+    // @ts-ignore
+    const tableRows = this.myTable.ddsElement.querySelectorAll(`.dds__tr`);
+    if (tableRows.length > pageSize) {
+        for (let intI = pageSize; intI < tableRows.length; intI++) {
+        tableRows[intI].remove();
+        }
+    }
   }
 }
