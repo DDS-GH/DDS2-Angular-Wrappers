@@ -52,6 +52,7 @@ export class TablePageComponent implements AfterViewInit {
       {
         value: `Khakis`,
         sortBy: this.sorting,
+        width: 200
       },
       {
         value: `Cornish <tthold id="ht${Uuid()}" title="Tooltip Title">Tooltip Content</tthold>`,
