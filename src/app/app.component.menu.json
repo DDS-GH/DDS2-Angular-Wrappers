@@ -16,8 +16,13 @@
     "tags": ["all", "simple", "navigation"]
   },
   {
-    "icon": "chart-insights",
+    "icon": "clock",
     "text": "Progress",
+    "tags": ["all", "simple", "info"]
+  },
+  {
+    "icon": "chart-insights",
+    "text": "ProgressBar",
     "tags": ["all", "simple", "info"]
   },
   {

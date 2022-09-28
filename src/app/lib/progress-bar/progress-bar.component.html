@@ -1,0 +1,6 @@
+<div [id]="elementId" class="dds__progress-bar {{classList}}" tabindex="0" data-dds="progress-bar">
+    <label [id]="elementId + '-label'" class="dds__progress-bar__label">{{label}}</label>
+    <div class="dds__progress-bar__indicator" title="{{title}}" role="progressbar"
+        [attr.aria-describedby]="elementId + '-label ' + elementId + '-helper'"></div>
+    <span [id]="elementId + '-helper'" class="dds__progress-bar__helper-text">{{helper}}</span>
+</div>
