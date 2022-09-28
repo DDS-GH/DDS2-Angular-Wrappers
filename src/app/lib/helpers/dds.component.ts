@@ -72,7 +72,7 @@ export class DdsComponent implements OnInit, AfterViewInit {
     if (this.ddsElement) {
       if (DDS[ddsCom]) {
         this.ddsOptions = tryParseOptions(this.ddsOptions);
-        this.ddsComponent = new DDS[ddsCom](this.ddsElement, this.ddsOptions);
+        this.ddsComponent = DDS[ddsCom](this.ddsElement, this.ddsOptions);
       } else {
         console.error(`No such DDS Component, ${ddsCom}`);
       }
@@ -92,7 +92,7 @@ export class DdsComponent implements OnInit, AfterViewInit {
         selector: `#${this.elementId}`,
         callback: (elem: any): void => {
           this.ddsOptions = tryParseOptions(this.ddsOptions);
-          this.ddsComponent = new DDS[ddsCom](elem, this.ddsOptions);
+          this.ddsComponent = DDS[ddsCom](elem, this.ddsOptions);
         }
       }
     ];

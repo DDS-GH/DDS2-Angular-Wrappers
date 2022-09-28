@@ -29,6 +29,7 @@ import { NotificationPageComponent } from "./pages/notification/notification.pag
 import { PaginationPageComponent } from "./pages/pagination/pagination.page";
 import { PopoverPageComponent } from "./pages/popover/popover.page";
 import { ProgressPageComponent } from "./pages/progress/progress.page";
+import { ProgressBarPageComponent } from "./pages/progress-bar/progress-bar.page";
 import { SelectPageComponent } from "./pages/select/select.page";
 import { SidenavPageComponent } from "./pages/sidenav/sidenav.page";
 import { TablePageComponent } from "./pages/table/table.page";
@@ -61,6 +62,7 @@ import { NotificationComponent } from "./lib/notification/notification.component
 import { PaginationComponent } from "./lib/pagination/pagination.component";
 import { PopoverComponent } from "./lib/popover/popover.component";
 import { ProgressComponent } from "./lib/progress/progress.component";
+import { ProgressBarComponent } from "./lib/progress-bar/progress-bar.component";
 import { RadioComponent } from "./lib/radio/radio.component";
 import { SelectComponent } from "./lib/select/select.component";
 import { SidenavModule } from "./lib/sidenav/sidenav.module";
@@ -98,6 +100,7 @@ const appRoutes: Routes = [
   { path: "pagination", component: PaginationPageComponent },
   { path: "popover", component: PopoverPageComponent },
   { path: "progress", component: ProgressPageComponent },
+  { path: "progressbar", component: ProgressBarPageComponent },
   { path: "radio", component: RadioPageComponent },
   { path: "select", component: SelectPageComponent },
   { path: "sidenav", component: SidenavPageComponent },
@@ -129,6 +132,7 @@ const components = [
   PaginationComponent,
   PopoverComponent,
   ProgressComponent,
+  ProgressBarComponent,
   RadioComponent,
   SelectComponent,
   TableComponent,
@@ -162,6 +166,7 @@ const pages = [
   PaginationPageComponent,
   PopoverPageComponent,
   ProgressPageComponent,
+  ProgressBarPageComponent,
   RadioPageComponent,
   SelectPageComponent,
   SidenavPageComponent,
