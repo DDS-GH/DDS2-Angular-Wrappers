@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import * as data from "./dropdown.page.json";
+import * as dataMeow from "./dropdown2.page.json";
 
 interface DGroups {
   name: string;
@@ -16,25 +17,36 @@ export class DropdownPageComponent implements OnInit {
   public stored: Array<any> = [];
   public showTags: boolean = false;
   public data: any = data;
+  public data2: any = [];
+  public dataMeow: any = dataMeow;
 
   ngOnInit(): void {
     if (!this.data.sort) {
-        const nonJsonMenu: any = [];
-        Object.keys(this.data).forEach((key) => {
-          if (this.data[key].options) {
-            nonJsonMenu.push({
-                name: this.data[key].icon,
-                hidden: this.data[key].text,
-                stored: this.data[key].tags,
-                options: this.data[key].options
-            });
-          }
-        });
-        this.data = nonJsonMenu;
-      }
+      const nonJsonMenu: any = [];
+      Object.keys(this.data).forEach((key) => {
+        if (this.data[key].options) {
+          nonJsonMenu.push({
+            name: this.data[key].icon,
+            hidden: this.data[key].text,
+            stored: this.data[key].tags,
+            options: this.data[key].options
+          });
+        }
+      });
+      this.data = nonJsonMenu;
+    }
+  }
+
+  handleSelected(e) {
+    console.log(e);
+    this.data2 = this.dataMeow;
   }
 
   handleToggle() {
     this.data[0].options[1].hidden = !this.data[0].options[1].hidden;
+  }
+
+  handleReset() {
+    this.data2 = [];
   }
 }
