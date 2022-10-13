@@ -5,21 +5,43 @@
       Dropdowns can also be used in the Filter pattern; please see more examples
       of that usage under <a routerLink="/horizontal">Filter</a>.
     </p>
+    <p>
+      These two Dropdowns are related; if you choose any value in the first
+      Dropdown, the second will be populated.
+    </p>
     <div class="controlPanel">
       <button role="button" class="dds__button" (click)="handleToggle()">
         Toggle First Hidden Option
+      </button>
+      <button role="button" class="dds__button" (click)="handleReset()">
+        Reset Second Dropdown
       </button>
     </div>
     <dds-dropdown
       #ddRef
       required="true"
-      elementId="ddsDropdownSimple"
+      elementId="ddsDropdownSimple1"
       label="Swat at dog sleeping"
       helper="loved it, hated it, loved it, hated it"
       ddsOptions='{"selection": "single"}'
       placeholder="i will be pet i will be pet"
+      (optionSelected)="handleSelected($event)"
       useXClear="true"
+      disabled="false"
       [groups]="data"
+    >
+    </dds-dropdown>
+    <hr />
+    <dds-dropdown
+      #ddRef
+      required="true"
+      elementId="ddsDropdownSimple2"
+      label="Being gorgeous with belly side up"
+      helper="Pretend you want to go out"
+      ddsOptions='{"selection": "single"}'
+      placeholder="Walk on car leaving trail of paw prints"
+      useXClear="true"
+      [groups]="data2"
     >
     </dds-dropdown>
   </div>

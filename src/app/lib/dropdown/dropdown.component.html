@@ -29,6 +29,7 @@
         [class.warning]="warning"
         [attr.aria-labelledby]="elementId + '-label ' + elementId + '-helper'"
         autocomplete="off"
+        [disabled]="disabled"
         [placeholder]="placeholder"
       />
 
@@ -94,6 +95,7 @@
                   role="option"
                   [attr.data-selected]="option.selected === true || option.stored
                   === true"
+                  [attr.aria-disabled]="option.disabled"
                   tabindex="-1"
                   [attr.data-value]="option.value"
                 >
