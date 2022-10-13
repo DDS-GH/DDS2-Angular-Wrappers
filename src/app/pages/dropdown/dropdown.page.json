@@ -18,7 +18,8 @@
       {
         "name": "Kitty Item 1",
         "value": "Kitty Item 11",
-        "selected": false
+        "selected": false,
+        "disabled": true
       },
       {
         "name": "Not Shown Item 1",

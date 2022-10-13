@@ -15,6 +15,7 @@ import { debounce, throttle, stringToBoolean } from "../helpers/dds.helpers";
   styleUrls: [`./dropdown.component.scss`]
 })
 export class DropdownComponent extends DdsComponent implements OnChanges {
+  @Input() disabled: any = `false`;
   @Input() label: string = ``;
   @Input() helper: string = ``;
   @Input() groups: any;
@@ -34,6 +35,7 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
   override ngOnInit(): void {
     super.ngOnInit();
     this.ddsInitializer = `Dropdown`;
+    this.disabled = stringToBoolean(this.disabled);
     this.useBackend = stringToBoolean(this.useBackend);
     this.useXClear = stringToBoolean(this.useXClear);
     this.required = stringToBoolean(this.required);
