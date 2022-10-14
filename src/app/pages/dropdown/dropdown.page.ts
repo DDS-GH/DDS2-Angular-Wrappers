@@ -13,7 +13,8 @@ interface DGroups {
   templateUrl: "./dropdown.page.html"
 })
 export class DropdownPageComponent implements OnInit {
-  @ViewChild(`ddRef`) ddRef!: ElementRef<HTMLElement>;
+  @ViewChild(`ddRef1`) ddRef1!: ElementRef<HTMLElement>;
+  @ViewChild(`ddRef2`) ddRef2!: ElementRef<HTMLElement>;
   public stored: Array<any> = [];
   public showTags: boolean = false;
   public data: any = data;
@@ -37,7 +38,7 @@ export class DropdownPageComponent implements OnInit {
     }
   }
 
-  handleSelected(e) {
+  handleSelected(e: any) {
     console.log(e);
     this.data2 = this.dataMeow;
   }
@@ -48,5 +49,7 @@ export class DropdownPageComponent implements OnInit {
 
   handleReset() {
     this.data2 = [];
+    // @ts-ignore
+    this.ddRef2.ddsComponent.clearSelection();
   }
 }
