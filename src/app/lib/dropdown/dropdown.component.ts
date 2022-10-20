@@ -26,7 +26,6 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
   @Input() warning: string = ``;
   @Input() placeholder: string = ``;
   @Output() onKeyUp: EventEmitter<string> = new EventEmitter<string>();
-  @Output() optionsAllSelected: EventEmitter<object> = new EventEmitter<object>();
   @Output() optionSelected: EventEmitter<object> = new EventEmitter<object>();
   @Output() optionDeselected: EventEmitter<object> = new EventEmitter<object>();
   @Output() optionsCleared: EventEmitter<string> = new EventEmitter<string>();
