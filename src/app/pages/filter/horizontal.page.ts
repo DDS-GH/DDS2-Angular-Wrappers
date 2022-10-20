@@ -66,24 +66,41 @@ export class FilterHorizontalPageComponent implements OnInit {
 
   handleDropdown = {
     clear: (index: number, e: any) => {
+      console.log(`pagelevel. cleared`);
       this.dropdownData[index].stored = [];
       this.checkForNoResults();
     },
     select: (index: number, e: any) => {
-      this.dropdownData[index].stored = arrayAdd(
-        this.dropdownData[index].stored,
-        e
-      );
+      console.log(`pagelevel. select`, index, e);
+      if (Array.isArray(e)) {
+        e.forEach((arrayVal) => {
+          this.dropdownData[index].stored = arrayAdd(
+            this.dropdownData[index].stored,
+            arrayVal
+          );
+        });
+      } else {
+        this.dropdownData[index].stored = arrayAdd(
+          this.dropdownData[index].stored,
+          e
+        );
+      }
       this.checkForNoResults();
     },
     deselect: (index: number, e: any) => {
-      this.dropdownData[index].stored = arrayRemove(
-        this.dropdownData[index].stored,
-        e
-      );
+      console.log(`pagelevel. deselect`, index, e);
+      if (Array.isArray(e)) {
+        this.dropdownData[index].stored = [];
+      } else {
+        this.dropdownData[index].stored = arrayRemove(
+          this.dropdownData[index].stored,
+          e
+        );
+      }
       this.checkForNoResults();
     },
     keyUp: (index: number, e: any) => {
+      console.log(`pagelevel. keyup`, index, e);
       this.matchSelectionsWithNewData(index, e);
     },
     externalUpdate: () => {
