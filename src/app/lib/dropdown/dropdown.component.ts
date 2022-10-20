@@ -118,11 +118,20 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
           e.target.classList.contains(`dds__dropdown__item-option`)
         ) {
           const isSelectAll = e.target.parentElement.classList.contains(`dds__dropdown__select-all`);
-          const ddListEl = this.ddsElement.querySelector(`.dds__dropdown__list`);
-          const ddOptions = ddListEl.querySelectorAll(`.dds__dropdown__item-option`)
           if (isSelectAll) {
             const currentSelection = this.ddsComponent.getSelection();
-            emitSelection(currentSelection);
+            const currentSelectionWithLabels:Array<any> = [];
+            this.groups.forEach((g: any) => {
+              g.options.forEach((o: any) => {
+                if (currentSelection.includes(o.value)) {
+                  currentSelectionWithLabels.push({
+                    text: o.name,
+                    value: o.value,
+                  });
+                }
+              })
+            })
+            emitSelection(currentSelectionWithLabels);
           } else {
             emitSelection(e.target);
           }

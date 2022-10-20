@@ -72,18 +72,31 @@ export class FilterHorizontalPageComponent implements OnInit {
     },
     select: (index: number, e: any) => {
       console.log(`pagelevel. select`, index, e);
-      this.dropdownData[index].stored = arrayAdd(
-        this.dropdownData[index].stored,
-        e
-      );
+      if (Array.isArray(e)) {
+        e.forEach((arrayVal) => {
+          this.dropdownData[index].stored = arrayAdd(
+            this.dropdownData[index].stored,
+            arrayVal
+          );
+        });
+      } else {
+        this.dropdownData[index].stored = arrayAdd(
+          this.dropdownData[index].stored,
+          e
+        );
+      }
       this.checkForNoResults();
     },
     deselect: (index: number, e: any) => {
       console.log(`pagelevel. deselect`, index, e);
-      this.dropdownData[index].stored = arrayRemove(
-        this.dropdownData[index].stored,
-        e
-      );
+      if (Array.isArray(e)) {
+        this.dropdownData[index].stored = [];
+      } else {
+        this.dropdownData[index].stored = arrayRemove(
+          this.dropdownData[index].stored,
+          e
+        );
+      }
       this.checkForNoResults();
     },
     keyUp: (index: number, e: any) => {
