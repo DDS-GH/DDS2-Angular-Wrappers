@@ -21,10 +21,12 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
   @Input() groups: any;
   @Input() useBackend: any = `false`;
   @Input() useXClear: any = `false`;
+  @Input() useSelectAll: any = `true`;
   @Input() required: any = `false`;
   @Input() warning: string = ``;
   @Input() placeholder: string = ``;
   @Output() onKeyUp: EventEmitter<string> = new EventEmitter<string>();
+  @Output() optionsAllSelected: EventEmitter<object> = new EventEmitter<object>();
   @Output() optionSelected: EventEmitter<object> = new EventEmitter<object>();
   @Output() optionDeselected: EventEmitter<object> = new EventEmitter<object>();
   @Output() optionsCleared: EventEmitter<string> = new EventEmitter<string>();
@@ -36,6 +38,7 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
     super.ngOnInit();
     this.ddsInitializer = `Dropdown`;
     this.disabled = stringToBoolean(this.disabled);
+    this.useSelectAll = stringToBoolean(this.useSelectAll);
     this.useBackend = stringToBoolean(this.useBackend);
     this.useXClear = stringToBoolean(this.useXClear);
     this.required = stringToBoolean(this.required);
@@ -44,6 +47,13 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
 
   override ngAfterViewInit() {
     super.ngAfterViewInit();
+    
+    // hide select all if chosen
+    if (this.ddsOptions.selection === `multiple` && !this.useSelectAll) {
+      const selectAllOption = this.ddsElement.querySelector(`.dds__dropdown__select-all`);
+      selectAllOption.remove();
+    }
+
     const dropdownNotice = this.ddsElement.querySelector(`.dds__dropdown__notice`);
     const dropdownInput = this.ddsElement.querySelector(`.dds__dropdown__input-field`);
     const dropdownClear = this.ddsElement.querySelector(`.dds__tag`);
@@ -81,18 +91,23 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
     if (!this.listeners.includes(`clicking`)) {
       this.listeners.push(`clicking`);
       this.ddsElement.addEventListener(`click`, (e: any) => {
-        const emitSelection = (el: any) => {
+        const emitSelection = (e: any) => {
           let valueToSubmit: any;
-          const dataValue = el.getAttribute("data-value");
+          let dataValue;
+          if (e.getAttribute) {
+            dataValue = e.getAttribute("data-value");
+          } else {
+            valueToSubmit = e;
+          }
             if (dataValue) {
               valueToSubmit = {
                 value: dataValue,
-                text: el.innerText.trim()
+                text: e.innerText.trim()
               };
-            } else {
-              valueToSubmit = el.innerText.trim();
+            } else if (e.innerText) {
+              valueToSubmit = e.innerText.trim();
             }
-            if (!stringToBoolean(el.getAttribute(`data-selected`))) {
+            if ((e.getAttribute && !stringToBoolean(e.getAttribute(`data-selected`)) || e.length === 0) ) {
               this.optionDeselected.emit(valueToSubmit);
             } else {
               this.optionSelected.emit(valueToSubmit);
@@ -106,11 +121,8 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
           const ddListEl = this.ddsElement.querySelector(`.dds__dropdown__list`);
           const ddOptions = ddListEl.querySelectorAll(`.dds__dropdown__item-option`)
           if (isSelectAll) {
-            ddOptions.forEach((ddOption: any) => {
-              if (!ddOption.parentElement.classList.contains(`dds__dropdown__select-all`)) {
-                emitSelection(ddOption);
-              }
-            });
+            const currentSelection = this.ddsComponent.getSelection();
+            emitSelection(currentSelection);
           } else {
             emitSelection(e.target);
           }
