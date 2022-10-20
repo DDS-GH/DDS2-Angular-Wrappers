@@ -66,12 +66,12 @@ export class FilterHorizontalPageComponent implements OnInit {
 
   handleDropdown = {
     clear: (index: number, e: any) => {
-      console.log(`pagelevel. cleared`);
+      console.warn(`pagelevel. cleared`);
       this.dropdownData[index].stored = [];
       this.checkForNoResults();
     },
     select: (index: number, e: any) => {
-      console.log(`pagelevel. select`, index, e);
+      console.warn(`pagelevel. select`, index, e);
       if (Array.isArray(e)) {
         e.forEach((arrayVal) => {
           this.dropdownData[index].stored = arrayAdd(
@@ -88,7 +88,7 @@ export class FilterHorizontalPageComponent implements OnInit {
       this.checkForNoResults();
     },
     deselect: (index: number, e: any) => {
-      console.log(`pagelevel. deselect`, index, e);
+      console.warn(`pagelevel. deselect`, index, e);
       if (Array.isArray(e)) {
         this.dropdownData[index].stored = [];
       } else {
@@ -100,7 +100,7 @@ export class FilterHorizontalPageComponent implements OnInit {
       this.checkForNoResults();
     },
     keyUp: (index: number, e: any) => {
-      console.log(`pagelevel. keyup`, index, e);
+      console.warn(`pagelevel. keyup`, index, e);
       this.matchSelectionsWithNewData(index, e);
     },
     externalUpdate: () => {
