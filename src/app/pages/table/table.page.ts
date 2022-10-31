@@ -293,6 +293,9 @@ export class TablePageComponent implements AfterViewInit {
 
   handleRowClick(e: any) {
     const dataIndex = e.target.closest(`.dds__tr`).getAttribute(`data-index`);
-    console.log(`Clicked on ${e.target}, in row: ${dataIndex}`);
+    debug({
+        iAm: `handleRowClick`,
+        msg: `Clicked on ${e.target} in row: ${dataIndex}`
+    });
   }
 }

@@ -37,6 +37,7 @@
             (onSort)="handleSort($event)"
             (onRowClick)="handleRowClick($event)"
             [classList]="classList"
+            [interactiveRows]="false"
         ></dds-table>
         <dds-pagination #myPagination [elementId]="paginationId"
             [perPageSelected]="paginationOptions.perPageSelected"
