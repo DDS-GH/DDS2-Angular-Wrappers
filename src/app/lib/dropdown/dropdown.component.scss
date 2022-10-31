@@ -35,3 +35,8 @@
   .ddsc__dropdown__item--hidden {
     display: none !important;
   }
+
+  ::ng-deep.ddsc__dropdown--disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
