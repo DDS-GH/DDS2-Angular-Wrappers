@@ -31,11 +31,17 @@
             [dismissible]="mb.dismissible" [layout]="mb.layout" [icon]="mb.icon" [variant]="mb.variant">
             {{mb.body}}
         </dds-messagebar>
-        <dds-table #myTable [elementId]="tableId" [ddsOptions]="config" (onSort)="handleSort($event)" [classList]="classList"></dds-table>
+        <dds-table #myTable 
+            [elementId]="tableId"
+            [ddsOptions]="config"
+            (onSort)="handleSort($event)"
+            (onRowClick)="handleRowClick($event)"
+            [classList]="classList"
+        ></dds-table>
         <dds-pagination #myPagination [elementId]="paginationId"
-                [perPageSelected]="paginationOptions.perPageSelected"
-                [perPageOptions]="paginationOptions.perPageOptions"
-                [ddsOptions]="paginationOptions.options"
+            [perPageSelected]="paginationOptions.perPageSelected"
+            [perPageOptions]="paginationOptions.perPageOptions"
+            [ddsOptions]="paginationOptions.options"
         ></dds-pagination>
         <dds-load
             #loader
