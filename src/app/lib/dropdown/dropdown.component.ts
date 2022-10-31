@@ -46,6 +46,14 @@ export class DropdownComponent extends DdsComponent implements OnChanges {
 
   override ngAfterViewInit() {
     super.ngAfterViewInit();
+
+    // disabled chevron if chosen
+    if (this.disabled) {
+      const chevronEl = this.ddsElement.querySelector(`.dds__dropdown__chevron`);
+      if (chevronEl) {
+        chevronEl.classList.add(`ddsc__dropdown--disabled`);
+      }
+    }
     
     // hide select all if chosen
     if (this.ddsOptions.selection === `multiple` && !this.useSelectAll) {
