@@ -34,6 +34,7 @@ import { SelectPageComponent } from "./pages/select/select.page";
 import { SidenavPageComponent } from "./pages/sidenav/sidenav.page";
 import { TablePageComponent } from "./pages/table/table.page";
 import { TablePaginationPageComponent } from "./pages/table/table-pagination.page";
+import { TableDataSourcePageComponent } from "./pages/table/table-datasource.page";
 import { TabsPageComponent } from "./pages/tabs/tabs.page";
 import { TagPageComponent } from "./pages/tag/tag.page";
 import { TextAreaPageComponent } from "./pages/textarea/textarea.page";
@@ -106,6 +107,7 @@ const appRoutes: Routes = [
   { path: "sidenav", component: SidenavPageComponent },
   { path: "table", component: TablePageComponent },
   { path: "table-pagination", component: TablePaginationPageComponent },
+  { path: "table-datasource", component: TableDataSourcePageComponent },
   { path: "tabs", component: TabsPageComponent },
   { path: "tag", component: TagPageComponent },
   { path: "textarea", component: TextAreaPageComponent },
@@ -172,6 +174,7 @@ const pages = [
   SidenavPageComponent,
   TablePageComponent,
   TablePaginationPageComponent,
+  TableDataSourcePageComponent,
   TabsPageComponent,
   TagPageComponent,
   TextAreaPageComponent,
