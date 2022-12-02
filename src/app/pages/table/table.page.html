@@ -2,14 +2,21 @@
 <div class="dds__row">
     <div class="dds__col--2 dds__col--sm-12 dds__col--md-12 dds__mb-3">
         <h3 style="color:red">Pagination</h3>
-        <p>
-            The built-in connection to the Pagination component has been released for the Table
-            as of v2.14.0. Please see the <a
-                href="https://vanilla.delldesignsystem.com/?path=/docs/components-table--w-pagination"
-                target="blank">documentation on Storybook</a>.
-            The following sample will remain in place, showing how to manually connect the two components:
-            <a routerLink="/table-pagination">Table-Pagination</a> page.
-        </p>
+        <ul>
+            <li>
+                The dataSource property for server-side data usage has been released for
+                the Table and a very basic implementation can be found on the 
+                <a routerLink="/table-datasource">table-datasource page</a>.
+            </li>
+            <li>
+                The built-in connection to the Pagination component has been released for the Table
+                as of v2.14.0. Please see the <a
+                    href="https://vanilla.delldesignsystem.com/?path=/docs/components-table--w-pagination"
+                    target="blank">documentation on Storybook</a>.
+                The following sample will remain in place, showing how to manually connect the two components:
+                <a routerLink="/table-pagination">Table-Pagination</a> page.
+            </li>
+        </ul>
         <div class="controlPanel">
             <button role="button" class="dds__button" (click)="handleAdd(1)">
                 Add Row

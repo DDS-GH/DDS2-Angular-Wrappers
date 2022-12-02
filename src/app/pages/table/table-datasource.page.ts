@@ -15,7 +15,7 @@ import {
 export class TableDataSourcePageComponent {
   @ViewChild(`myTable`) myTable!: ElementRef<HTMLElement>;
   @ViewChild(`myPagination`) myPagination!: ElementRef<HTMLElement>;
-  @ViewChild(`loader`) loader!: ElementRef<HTMLElement>;
+  @ViewChild(`loader`) myLoader!: ElementRef<HTMLElement>;
 
   public tableId: string = `tableInstance`;
   public paginationId: string = `paginationInstance`;
@@ -52,19 +52,18 @@ export class TableDataSourcePageComponent {
     },
   };
 
-  async fetchData(options: any = {}) {
-    let currentPage = options.currentPage;
-    let pageSize = options.pageSize;
-    let sort = options.sort;
+  async fetchData({ currentPage, pageSize, sort }: any) {
+    const makeRequest = (options: any) => {
+      options = options || {};
+      const method = options.method;
+      const url = options.url;
+      const data = options.data || {};
+      const token = options.token || ``;
 
-    const makeRequest = (options: any = {}) => {
-      let method = options.method;
-      let url = options.url;
-      let data = options.data || {};
-      let token = options.token;
-
-      // @ts-ignore
-      // this.loader.toggle();
+      if (!method || !url) {
+        console.error(`makeRequest configuration error`);
+        return;
+      }
 
       const xhr = new XMLHttpRequest();
       return new Promise((resolve) => {
@@ -88,23 +87,51 @@ export class TableDataSourcePageComponent {
         if (token != null) {
           xhr.setRequestHeader('X-Jsio-Token', token);
         }
-        if (Object.keys(data).length === 0) {
-          xhr.send();
-        } else {
+
+        if (Object.keys(data).length > 0) {
           xhr.send(JSON.stringify(data));
+        } else {
+          xhr.send();
         }
       });
     };
+    const loader: any = {
+      show: () => {
+        // @ts-ignore
+        // this.loader.ddsComponent.show();
+      },
+      hide: () => {
+        // @ts-ignore
+        // self.loader.ddsComponent.hide();
+      },
+    };
 
     try {
-      // @ts-ignore
+      loader.show();
       const request: any = await makeRequest({
         method: `GET`,
         url: `https://my-json-server.typicode.com/DDS-DLS/DDS-Table-json/series`,
       });
       let parsed = JSON.parse(request.response);
       let totalCount = parsed.length;
-      let filteredCount;
+      let fCount;
+
+      //   // get all filters (tags)
+      //   parsed.forEach(p => {
+      //     p.tags.forEach(pt => {
+      //       if (!filters.tags.current.includes(pt)) {
+      //         filters.tags.current.push(pt);
+      //       }
+      //     })
+      //   });
+
+      //   // filter server data
+      //   if (filters.tags.selected) {
+      //     parsed = parsed.filter((elm) => {
+      //       return elm.tags.includes(filters.tags.selected);
+      //     });
+      //     fCount = parsed.length;
+      //   }
 
       // Sort server data
       if (sort && sort.columnId !== undefined && sort.sortBy !== undefined) {
@@ -121,7 +148,7 @@ export class TableDataSourcePageComponent {
       }
 
       // map data
-      const response: Array<any> = [];
+      const response: any[] = [];
       parsed.forEach((r: any) => {
         response.push({
           expandable: true,
@@ -129,24 +156,22 @@ export class TableDataSourcePageComponent {
           columns: [
             { value: r.name },
             { value: r.tags.join(`, `) },
-            { value: r.url }
+            { value: r.url },
+            { value: `` },
           ],
         });
       });
 
-      // @ts-ignore
-      //   this.loader.toggle();
-
       const retObj = {
         data: response,
-        totalItems: filteredCount || totalCount,
+        totalItems: fCount || totalCount,
       };
-
-      console.log(retObj);
+      loader.hide();
       return retObj;
     } catch (error) {
       console.warn('fetchData fail', error);
-      return null;
+      loader.hide();
+      return;
     }
   }
 
